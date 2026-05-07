@@ -1,6 +1,10 @@
 # Changelog
 
 ## 2026-05-07
+- Fixed invalid JSON in `assets/data/adventures.json` (broken string on Bangkok title) that prevented the whole site from loading.
+- Adventures: card headings use `title` from JSON exactly as written (no capitalization or filename formatting).
+- Adventures: hover-only image overlays; quote-style serif titles at double the former card title size (28px, 24px on small screens); 12pt sans descriptions; titles from filenames without extension (first letter capitalized, underscores as spaces).
+- Updated `assets/data/adventures.json` to render all local photos from `assets/images/adventures/` with one card per image and filename-based headers.
 - Created initial personal website scaffold with `index.html`, `style.css`, and `script.js`.
 - Added JSON content model in `assets/data/` for profile, work, now, adventures, and contact.
 - Added marco-inspired contact card UI with LinkedIn + email links and form submission wiring.

@@ -2,57 +2,105 @@
   "_fileInfo": {
     "purpose": "Adventures tab quote and image grid data.",
     "usedBy": "Rendered by script.js into photo cards.",
-    "changed": "Initial placeholders for adventure stories."
+    "changed": "Hover-only overlays; titles derived from filename; placeholder descriptions."
   },
   "quote": "Life is not a spectator sport!",
   "cards": [
     {
-      "image": "assets/photo-placeholder.svg",
-      "alt": "Adventure placeholder image",
-      "title": "[Header]",
-      "subtext": "[Subtext]"
+      "image": "assets/images/adventures/bangkok.JPG",
+      "alt": "bangkok.JPG adventure photo",
+      "title": "Bangkok",
+      "subtext": "Have never seen so many Buddhas in one place, each larger than the last"
     },
     {
-      "image": "assets/photo-placeholder.svg",
-      "alt": "Adventure placeholder image",
-      "title": "[Header]",
-      "subtext": "[Subtext]"
+      "image": "assets/images/adventures/camino.jpeg",
+      "alt": "camino.jpeg adventure photo",
+      "title": "El Camino de Santiago",
+      "subtext": "Bucket list item with my best friends"
     },
     {
-      "image": "assets/photo-placeholder.svg",
-      "alt": "Adventure placeholder image",
-      "title": "[Header]",
-      "subtext": "[Subtext]"
+      "image": "assets/images/adventures/costarica.JPG",
+      "alt": "costarica.JPG adventure photo",
+      "title": "Costa Rica",
+      "subtext": "Homestay with a rural farmer – yes we climed that rope ladder!"
     },
     {
-      "image": "assets/photo-placeholder.svg",
-      "alt": "Adventure placeholder image",
-      "title": "[Header]",
-      "subtext": "[Subtext]"
+      "image": "assets/images/adventures/diving.jpeg",
+      "alt": "diving.jpeg adventure photo",
+      "title": "Little St. James",
+      "subtext": "Got scuba certified in the USVI – they failed to mention we were going off of Epstein Island"
     },
     {
-      "image": "assets/photo-placeholder.svg",
-      "alt": "Adventure placeholder image",
-      "title": "[Header]",
-      "subtext": "[Subtext]"
+      "image": "assets/images/adventures/hawaii.jpeg",
+      "alt": "hawaii.jpeg adventure photo",
+      "title": "Honolulu",
+      "subtext": "Hiking up to old WWII pillboxes with my family :)"
     },
     {
-      "image": "assets/photo-placeholder.svg",
-      "alt": "Adventure placeholder image",
-      "title": "[Header]",
-      "subtext": "[Subtext]"
+      "image": "assets/images/adventures/marathon.JPG",
+      "alt": "marathon.JPG adventure photo",
+      "title": "First Marathon",
+      "subtext": "Started running during COVID and never stopped :)"
     },
     {
-      "image": "assets/photo-placeholder.svg",
-      "alt": "Adventure placeholder image",
-      "title": "[Header]",
-      "subtext": "[Subtext]"
+      "image": "assets/images/adventures/offroad.jpeg",
+      "alt": "offroad.jpeg adventure photo",
+      "title": "BFE, Missouri",
+      "subtext": "Getting Gators stuck is one my superpowers"
     },
     {
-      "image": "assets/photo-placeholder.svg",
-      "alt": "Adventure placeholder image",
-      "title": "[Header]",
-      "subtext": "[Subtext]"
+      "image": "assets/images/adventures/oktoberfest.JPG",
+      "alt": "oktoberfest.JPG adventure photo",
+      "title": "Oktoberfest",
+      "subtext": "No, those weren't all for me"
+    },
+    {
+      "image": "assets/images/adventures/portugal.jpeg",
+      "alt": "portugal.jpeg adventure photo",
+      "title": "Lagos, Portugal",
+      "subtext": "Cave kayaking in one of the prettiest places on earth"
+    },
+    {
+      "image": "assets/images/adventures/ragnar.jpg",
+      "alt": "ragnar.jpg adventure photo",
+      "title": "Trail Racing",
+      "subtext": "I have become addicted to these 24h Ragnar trail relay races"
+    },
+    {
+      "image": "assets/images/adventures/rowing.jpeg",
+      "alt": "rowing.jpeg adventure photo",
+      "title": "James River",
+      "subtext": "I rowed crew in college and go back to the alumni race every year, usually to lose to the undergrads"
+    },
+    {
+      "image": "assets/images/adventures/sailing.jpg",
+      "alt": "sailing.jpg adventure photo",
+      "title": "Hudson River",
+      "subtext": "Learning how to sail (poorly)"
+    },
+    {
+      "image": "assets/images/adventures/ski_japan.jpeg",
+      "alt": "ski_japan.jpeg adventure photo",
+      "title": "Niseko, Japan",
+      "subtext": "Skiing the end-of-season slush with my brother"
+    },
+    {
+      "image": "assets/images/adventures/sonoma.jpg",
+      "alt": "sonoma.jpg adventure photo",
+      "title": "Sonoma, CA",
+      "subtext": "Built this car in high school and got 519MPG at Sonoma Raceway"
+    },
+    {
+      "image": "assets/images/adventures/surf.png",
+      "alt": "surf.png adventure photo",
+      "title": "Bali, Indonesia",
+      "subtext": "Gotta start somewhere."
+    },
+    {
+      "image": "assets/images/adventures/triathalon.JPG",
+      "alt": "triathalon.JPG adventure photo",
+      "title": "First Triathlon",
+      "subtext": "Short course but a good intro, hope to do a half Ironman someday"
     }
   ]
 }

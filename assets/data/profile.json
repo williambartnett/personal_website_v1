@@ -17,15 +17,19 @@
   "aboutCards": [
     {
       "title": "Where I'm From",
-      "body": "[TBD] Add your hometown and roots."
+      "body": "I was born and raised in St. Louis, MO. My dad is a medical salesman and my mom runs an idependent bookstore. We are a big DIY family, and I grew up building and tinkering, from building treehouses to rebuilding our lawnmower engine. I also spent many summers at my grandparent's farm where I learned to love nature, put in an honest day's work, and get vehicles stuck in the mud."
     },
     {
       "title": "What I Used to Do",
-      "body": "[TBD] Add your previous work and interests."
+      "body": "When I was 12 I passed out flyers and started mowing lawns. I saved enough to upgrade my equipment and expand, and did that every weekend through high school. After graduating from college I made pretty slide decks as an investment banker for a few years and got pretty good at Excel."
     },
     {
-      "title": "What I Do Now",
-      "body": "[TBD] Add your current focus and goals."
+      "title": "What I'm Looking For",
+      "body": "After working with people building businesses I decided I wanted to do that instead of selling them. So I left banking, travelled the world for 8 months, and am moving up to NYC and finding an exciting startup to build something meaningful."
+    },
+    {
+      "title": "In My Free Time",
+      "body": "When I'm not working, you can usually find me running, trying new restaurants, and adventuring in new places with good friends."
     }
   ]
 }

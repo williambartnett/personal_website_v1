@@ -438,21 +438,42 @@ body {
 
 .adventure-overlay {
   position: absolute;
-  inset: auto 0 0;
-  padding: 22px 14px 14px;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.66));
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.5);
   color: #ffffff;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.22s ease;
+  pointer-events: none;
+}
+
+.adventure-card:hover .adventure-overlay {
+  opacity: 1;
 }
 
 .adventure-title {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 700;
+  margin: 0 0 10px;
+  max-width: 100%;
+  font-family: "DM Serif Display", serif;
+  font-style: italic;
+  font-weight: 400;
+  /* Twice the former 14px overlay title; same scale as `.quote` on the adventures tab */
+  font-size: 28px;
+  line-height: 1.15;
 }
 
 .adventure-subtext {
-  margin: 4px 0 0;
-  font-size: 12px;
+  margin: 0;
+  max-width: 32em;
+  font-family: "DM Sans", sans-serif;
+  font-size: 12pt;
+  line-height: 1.45;
+  font-weight: 400;
 }
 
 .contact-card {
@@ -556,6 +577,7 @@ body {
   .adventure-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
 }
 
 @media (max-width: 768px) {
@@ -576,6 +598,10 @@ body {
     font-size: 24px;
   }
 
+  .adventure-title {
+    font-size: 24px;
+  }
+
   .contact-right img {
     max-width: 140px;
   }
@@ -586,4 +612,5 @@ body {
   .adventure-grid {
     grid-template-columns: 1fr;
   }
+
 }

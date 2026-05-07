@@ -2,6 +2,7 @@
 This file loads JSON content and renders all site sections.
 It is called by index.html and controls tab switching and contact form submission.
 CHANGED: Updated media panes to show multi-item native-style lists.
+CHANGED: Adventures headings use JSON titles verbatim; hover-only overlays.
 */
 
 // --- App configuration and state
@@ -376,7 +377,7 @@ function renderAdventuresSection() {
         <article class="adventure-card">
           <img src="${escapeHtml(cardItem.image)}" alt="${escapeHtml(cardItem.alt)}" />
           <div class="adventure-overlay">
-            <h3 class="adventure-title">${escapeHtml(cardItem.title)}</h3>
+            <h3 class="adventure-title">${escapeHtml(String(cardItem.title ?? ""))}</h3>
             <p class="adventure-subtext">${escapeHtml(cardItem.subtext)}</p>
           </div>
         </article>
