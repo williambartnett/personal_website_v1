@@ -1,0 +1,589 @@
+:root {
+  --background: #ffffff;
+  --card-background: #f2f2f2;
+  --primary-text: #1a1a1a;
+  --secondary-text: #666666;
+  --shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  --radius: 16px;
+  --content-width: 1340px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+  background: var(--background);
+  color: var(--primary-text);
+}
+
+.site-shell {
+  max-width: var(--content-width);
+  margin: 20px auto 48px;
+  padding: 0 16px;
+}
+
+.tab-nav {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  background: var(--card-background);
+  border-radius: 999px;
+  padding: 6px;
+  margin-bottom: 24px;
+}
+
+.tab-button {
+  border: 0;
+  background: transparent;
+  color: var(--primary-text);
+  font-size: 15px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-button.is-active {
+  background: #ffffff;
+  box-shadow: var(--shadow);
+}
+
+.tab-button:focus-visible {
+  outline: 2px solid #1a1a1a;
+  outline-offset: 2px;
+}
+
+.tab-panel {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.tab-panel.is-active {
+  display: block;
+  opacity: 1;
+}
+
+.section-title {
+  font-family: "DM Serif Display", serif;
+  font-size: 40px;
+  margin: 0 0 20px;
+}
+
+.quote {
+  font-family: "DM Serif Display", serif;
+  font-style: italic;
+  font-size: 28px;
+  text-align: center;
+  margin: 6px 0 24px;
+}
+
+.quote-author {
+  text-align: center;
+  color: var(--secondary-text);
+  margin-top: -10px;
+  margin-bottom: 24px;
+}
+
+.william-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.card {
+  background: var(--card-background);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
+
+.about-card h3,
+.work-card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.about-panel {
+  min-height: 100%;
+}
+
+.about-row {
+  padding: 14px 0;
+  border-top: 1px solid rgba(26, 26, 26, 0.08);
+}
+
+.about-row:first-of-type {
+  border-top: 0;
+}
+
+.about-card p,
+.work-card p {
+  margin: 0;
+  color: var(--secondary-text);
+  line-height: 1.6;
+}
+
+.about-row h3 {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  color: #6f6f6f;
+}
+
+.about-row p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.stack {
+  display: grid;
+  gap: 16px;
+}
+
+.image-card {
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.headshot-slider {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.headshot-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s ease;
+}
+
+.image-card.no-slide-transition .headshot-frame {
+  transition: none;
+}
+
+.headshot-current {
+  transform: translateX(0);
+}
+
+.headshot-next {
+  transform: translateX(100%);
+}
+
+.image-card.is-sliding .headshot-current {
+  transform: translateX(-100%);
+}
+
+.image-card.is-sliding .headshot-next {
+  transform: translateX(0);
+}
+
+.headshot-app-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  aspect-ratio: auto;
+  object-fit: cover;
+  box-shadow: var(--shadow);
+  z-index: 2;
+}
+
+.right-column {
+  display: grid;
+  gap: 16px;
+}
+
+.square-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.media-card {
+  display: grid;
+  min-height: 360px;
+  grid-template-rows: auto 1fr;
+  position: relative;
+}
+
+.media-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+
+.media-icon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.media-row-app-icon-only {
+  justify-content: flex-start;
+  margin-bottom: 8px;
+  gap: 10px;
+}
+
+.media-app-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: var(--shadow);
+}
+
+.media-heading-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary-text);
+}
+
+.media-pane {
+  margin-top: 12px;
+  border-radius: 12px;
+  overflow: auto;
+  min-height: 250px;
+  max-height: 250px;
+  padding: 10px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.media-pane::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.media-card-spotify .media-pane {
+  background: #121212;
+}
+
+.spotify-item {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 10px;
+  align-items: center;
+  text-decoration: none;
+  color: #ffffff;
+  padding: 6px 0;
+}
+
+.spotify-item img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.spotify-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.spotify-artist {
+  margin: 2px 0 0;
+  color: #b3b3b3;
+  font-size: 13px;
+}
+
+.media-card-beli .media-pane {
+  background: #ffffff;
+}
+
+.beli-item {
+  display: grid;
+  grid-template-columns: 54px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  text-decoration: none;
+  color: var(--primary-text);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+}
+
+.beli-item:last-child {
+  border-bottom: 0;
+}
+
+.beli-item img {
+  width: 54px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.beli-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.beli-subtitle {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #666666;
+}
+
+.beli-score {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #d9dfd9;
+  color: #14916a;
+  font-weight: 700;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.media-card-goodreads .media-pane {
+  background: #f8f7f2;
+}
+
+.goodreads-item {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 10px;
+  align-items: center;
+  text-decoration: none;
+  color: var(--primary-text);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(85, 59, 8, 0.15);
+}
+
+.goodreads-item:last-child {
+  border-bottom: 0;
+}
+
+.goodreads-item img {
+  width: 40px;
+  height: 56px;
+  object-fit: cover;
+}
+
+.goodreads-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.goodreads-author {
+  margin: 2px 0 0;
+  color: #6c6c6c;
+  font-size: 13px;
+}
+
+.media-card-letterboxd .media-pane {
+  background: #1b2632;
+  max-height: 285px;
+  min-height: 285px;
+}
+
+.letterboxd-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.letterboxd-item img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.work-layout {
+  display: grid;
+  gap: 16px;
+}
+
+.adventure-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.adventure-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  min-height: 210px;
+  background: #d7d7d7;
+}
+
+.adventure-card img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+}
+
+.adventure-overlay {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 22px 14px 14px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.66));
+  color: #ffffff;
+}
+
+.adventure-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.adventure-subtext {
+  margin: 4px 0 0;
+  font-size: 12px;
+}
+
+.contact-card {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 20px;
+}
+
+.contact-left h2 {
+  font-family: "DM Serif Display", serif;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.contact-left p {
+  margin: 0 0 12px;
+  color: var(--secondary-text);
+  line-height: 1.6;
+}
+
+.contact-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--primary-text);
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.contact-right {
+  display: grid;
+  gap: 12px;
+}
+
+.contact-right img {
+  width: 100%;
+  max-width: 180px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.contact-form {
+  display: grid;
+  gap: 10px;
+}
+
+.contact-form label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.contact-form input,
+.contact-form textarea {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 95px;
+}
+
+.contact-form button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+.contact-form-message {
+  font-size: 13px;
+  margin: 0;
+}
+
+.is-error {
+  color: #9e1f1f;
+}
+
+.is-success {
+  color: #137f2f;
+}
+
+@media (max-width: 900px) {
+  .adventure-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .william-layout,
+  .contact-card {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+
+  .about-row p {
+    font-size: 16px;
+  }
+
+  .quote {
+    font-size: 24px;
+  }
+
+  .contact-right img {
+    max-width: 140px;
+  }
+}
+
+@media (max-width: 520px) {
+  .square-grid,
+  .adventure-grid {
+    grid-template-columns: 1fr;
+  }
+}

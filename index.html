@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>William Bartnett</title>
+    <meta
+      name="description"
+      content="William Bartnett personal website: work, adventures, and ways to connect."
+    />
+    <meta property="og:title" content="William Bartnett" />
+    <meta
+      property="og:description"
+      content="Work, adventures, and current favorites from William Bartnett."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/photo.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="site-shell">
+      <nav class="tab-nav" aria-label="Primary">
+        <button class="tab-button is-active" data-tab-target="william-tab">Home</button>
+        <button class="tab-button" data-tab-target="adventures-tab">Adventures</button>
+        <button class="tab-button" data-tab-target="work-tab">Work</button>
+        <button class="tab-button" data-tab-target="contact-tab">Contact</button>
+      </nav>
+
+      <section id="william-tab" class="tab-panel is-active" aria-live="polite">
+        <div class="william-layout">
+          <div class="left-column">
+            <div id="about-cards"></div>
+          </div>
+          <div class="right-column">
+            <article id="profile-photo-card" class="card image-card">
+              <img class="headshot-app-badge" src="assets/images/apps/photos-app-icon.jpg" alt="Apple Photos app icon" />
+              <div class="headshot-slider" aria-live="off">
+                <img id="profile-photo" class="headshot-frame headshot-current" src="assets/headshot1.jpeg" alt="Portrait of William Bartnett" />
+                <img id="profile-photo-next" class="headshot-frame headshot-next" src="assets/headshot2.jpeg" alt="Portrait of William Bartnett" />
+              </div>
+            </article>
+            <div id="now-cards" class="square-grid"></div>
+            <div id="contact-preview"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="work-tab" class="tab-panel" aria-live="polite">
+        <div id="work-content"></div>
+      </section>
+
+      <section id="adventures-tab" class="tab-panel" aria-live="polite">
+        <div id="adventures-content"></div>
+      </section>
+
+      <section id="contact-tab" class="tab-panel" aria-live="polite">
+        <div id="contact-content"></div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

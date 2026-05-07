@@ -1,0 +1,31 @@
+{
+  "_fileInfo": {
+    "purpose": "Profile content for the William tab.",
+    "usedBy": "Rendered by script.js into About cards and profile image.",
+    "changed": "Initial data model so text can be updated without HTML edits."
+  },
+  "profilePhoto": {
+    "src": "assets/headshot1.jpeg",
+    "alt": "Portrait of William Bartnett"
+  },
+  "profileSlideshowPhotos": [
+    "assets/headshot1.jpeg",
+    "assets/headshot2.jpeg",
+    "assets/headshot3.jpeg",
+    "assets/headshot4.jpeg"
+  ],
+  "aboutCards": [
+    {
+      "title": "Where I'm From",
+      "body": "[TBD] Add your hometown and roots."
+    },
+    {
+      "title": "What I Used to Do",
+      "body": "[TBD] Add your previous work and interests."
+    },
+    {
+      "title": "What I Do Now",
+      "body": "[TBD] Add your current focus and goals."
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "_fileInfo": {
+    "purpose": "Adventures tab quote and image grid data.",
+    "usedBy": "Rendered by script.js into photo cards.",
+    "changed": "Initial placeholders for adventure stories."
+  },
+  "quote": "Life is not a spectator sport!",
+  "cards": [
+    {
+      "image": "assets/photo-placeholder.svg",
+      "alt": "Adventure placeholder image",
+      "title": "[Header]",
+      "subtext": "[Subtext]"
+    },
+    {
+      "image": "assets/photo-placeholder.svg",
+      "alt": "Adventure placeholder image",
+      "title": "[Header]",
+      "subtext": "[Subtext]"
+    },
+    {
+      "image": "assets/photo-placeholder.svg",
+      "alt": "Adventure placeholder image",
+      "title": "[Header]",
+      "subtext": "[Subtext]"
+    },
+    {
+      "image": "assets/photo-placeholder.svg",
+      "alt": "Adventure placeholder image",
+      "title": "[Header]",
+      "subtext": "[Subtext]"
+    },
+    {
+      "image": "assets/photo-placeholder.svg",
+      "alt": "Adventure placeholder image",
+      "title": "[Header]",
+      "subtext": "[Subtext]"
+    },
+    {
+      "image": "assets/photo-placeholder.svg",
+      "alt": "Adventure placeholder image",
+      "title": "[Header]",
+      "subtext": "[Subtext]"
+    },
+    {
+      "image": "assets/photo-placeholder.svg",
+      "alt": "Adventure placeholder image",
+      "title": "[Header]",
+      "subtext": "[Subtext]"
+    },
+    {
+      "image": "assets/photo-placeholder.svg",
+      "alt": "Adventure placeholder image",
+      "title": "[Header]",
+      "subtext": "[Subtext]"
+    }
+  ]
+}

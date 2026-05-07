@@ -1,0 +1,17 @@
+{
+  "_fileInfo": {
+    "purpose": "Contact section text, links, and form endpoint.",
+    "usedBy": "Rendered by script.js in William preview and Contact tab.",
+    "changed": "Initial settings for marco-inspired contact card with LinkedIn swap."
+  },
+  "heading": "I'd love to connect.",
+  "description": "Reach out anytime. You can send a message below and I'll reply by email.",
+  "name": "William Bartnett",
+  "emailAddress": "william.bartnett@gmail.com",
+  "linkedinUrl": "https://linkedin.com/in/williambartnett",
+  "photo": {
+    "src": "assets/IMG_2086.jpeg",
+    "alt": "Headshot of William Bartnett"
+  },
+  "formspreeEndpoint": "https://formspree.io/f/your-form-id"
+}

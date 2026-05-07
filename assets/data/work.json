@@ -1,0 +1,29 @@
+{
+  "_fileInfo": {
+    "purpose": "Work tab quote and timeline-style cards.",
+    "usedBy": "Rendered by script.js in the Work tab.",
+    "changed": "Initial card list matching the planned section order."
+  },
+  "quote": {
+    "text": "Determine never to be idle. No person will have occasion to complain of the want of time, who never loses any. It is wonderful how much may be done, if we are always doing.",
+    "author": "Thomas Jefferson"
+  },
+  "cards": [
+    {
+      "title": "Vibe Coding",
+      "body": "[TBD] Add what you are building now and your approach."
+    },
+    {
+      "title": "Banking",
+      "body": "[TBD] Add highlights from your banking chapter."
+    },
+    {
+      "title": "University",
+      "body": "[TBD] Add notable study experiences and takeaways."
+    },
+    {
+      "title": "High School",
+      "body": "[TBD] Add early milestones that shaped your path."
+    }
+  ]
+}
