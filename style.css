@@ -127,6 +127,31 @@ body {
   line-height: 1.6;
 }
 
+.work-card-items {
+  display: grid;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.work-card-link {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.work-card-link:hover {
+  color: #000000;
+}
+
+.work-card-item-sub {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--secondary-text);
+  line-height: 1.55;
+}
+
 .about-row h3 {
   margin: 0 0 8px;
   text-transform: uppercase;

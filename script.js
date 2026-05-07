@@ -2,7 +2,7 @@
 This file loads JSON content and renders all site sections.
 It is called by index.html and controls tab switching and contact form submission.
 CHANGED: Updated media panes to show multi-item native-style lists.
-CHANGED: Adventures headings use JSON titles verbatim; hover-only overlays.
+CHANGED: Work tab supports optional item lists with linked titles and subtext.
 */
 
 // --- App configuration and state
@@ -342,21 +342,46 @@ function renderNowSection() {
 }
 
 /**
+ * Renders one work history card: plain body or a list of linked titles with description subtext.
+ */
+function renderWorkCardMarkup(cardItem) {
+  const hasItems = Array.isArray(cardItem.items) && cardItem.items.length > 0;
+
+  if (hasItems) {
+    const itemsMarkup = cardItem.items
+      .map(
+        (item) => `
+        <div class="work-card-item">
+          <a class="work-card-link" href="${escapeHtml(item.url)}" target="_blank" rel="noreferrer">${escapeHtml(item.title)}</a>
+          <p class="work-card-item-sub">${escapeHtml(item.description)}</p>
+        </div>
+      `
+      )
+      .join("");
+
+    return `
+        <article class="card work-card">
+          <h3>${escapeHtml(cardItem.title)}</h3>
+          <div class="work-card-items">${itemsMarkup}</div>
+        </article>
+      `;
+  }
+
+  return `
+        <article class="card work-card">
+          <h3>${escapeHtml(cardItem.title)}</h3>
+          <p>${escapeHtml(cardItem.body)}</p>
+        </article>
+      `;
+}
+
+/**
  * Renders the work quote and stacked work history cards.
  */
 function renderWorkSection() {
   const workContentElement = getRequiredElement("work-content");
 
-  const cardsMarkup = appState.work.cards
-    .map(
-      (cardItem) => `
-        <article class="card work-card">
-          <h3>${escapeHtml(cardItem.title)}</h3>
-          <p>${escapeHtml(cardItem.body)}</p>
-        </article>
-      `
-    )
-    .join("");
+  const cardsMarkup = appState.work.cards.map((cardItem) => renderWorkCardMarkup(cardItem)).join("");
 
   workContentElement.innerHTML = `
     <p class="quote">${escapeHtml(appState.work.quote.text)}</p>

@@ -2,7 +2,7 @@
   "_fileInfo": {
     "purpose": "Adventures tab quote and image grid data.",
     "usedBy": "Rendered by script.js into photo cards.",
-    "changed": "Hover-only overlays; titles derived from filename; placeholder descriptions."
+    "changed": "Diving card image uses headshot2.jpeg after on-disk swap so the adventure tile shows the dive photo with original Little St. James copy."
   },
   "quote": "Life is not a spectator sport!",
   "cards": [
@@ -26,7 +26,7 @@
     },
     {
       "image": "assets/images/adventures/diving.jpeg",
-      "alt": "diving.jpeg adventure photo",
+      "alt": "Scuba diving in the USVI near Little St. James",
       "title": "Little St. James",
       "subtext": "Got scuba certified in the USVI – they failed to mention we were going off of Epstein Island"
     },
@@ -46,7 +46,7 @@
       "image": "assets/images/adventures/offroad.jpeg",
       "alt": "offroad.jpeg adventure photo",
       "title": "BFE, Missouri",
-      "subtext": "Getting Gators stuck is one my superpowers"
+      "subtext": "Getting Gators stuck in the woods a long ways from the farm is one my superpowers"
     },
     {
       "image": "assets/images/adventures/oktoberfest.JPG",

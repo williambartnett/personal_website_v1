@@ -2,7 +2,7 @@
   "_fileInfo": {
     "purpose": "Profile content for the William tab.",
     "usedBy": "Rendered by script.js into About cards and profile image.",
-    "changed": "Initial data model so text can be updated without HTML edits."
+    "changed": "Slideshow slot 2 uses assets/headshot2.jpeg (same file as Adventures diving tile when that is the dive photo)."
   },
   "profilePhoto": {
     "src": "assets/headshot1.jpeg",
@@ -10,7 +10,7 @@
   },
   "profileSlideshowPhotos": [
     "assets/headshot1.jpeg",
-    "assets/headshot2.jpeg",
+    "assets/headshot2.jpeg?v=2",
     "assets/headshot3.jpeg",
     "assets/headshot4.jpeg"
   ],

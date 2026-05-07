@@ -2,7 +2,7 @@
   "_fileInfo": {
     "purpose": "Work tab quote and timeline-style cards.",
     "usedBy": "Rendered by script.js in the Work tab.",
-    "changed": "Initial card list matching the planned section order."
+    "changed": "Banking card lists linked deal highlights with description subtext."
   },
   "quote": {
     "text": "Determine never to be idle. No person will have occasion to complain of the want of time, who never loses any. It is wonderful how much may be done, if we are always doing.",
@@ -15,7 +15,48 @@
     },
     {
       "title": "Banking",
-      "body": "[TBD] Add highlights from your banking chapter."
+      "items": [
+        {
+          "url": "https://www.linkedin.com/posts/jefferies_jefferies-logistics-and-transportation-conference-ugcPost-7320797006283616257-xRD-?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB8i1BkBe5Y_Fp_AFzlvOGoYem5w4X20ED0",
+          "title": "Jefferies' Logistics & Transportation Conference",
+          "description": "Organized our L&T M&A conference"
+        },
+        {
+          "url": "https://www.businesswire.com/news/home/20221006005363/en/Apax-Funds-to-Sell-Boasso-Global-to-KKR",
+          "title": "Buyside: Sale of Boasso Global to KKR",
+          "description": "Researched M&A add-on targets for KKR"
+        },
+        {
+          "url": "https://news.delaware.gov/2023/07/12/new-operator-at-port-of-wilmington-finalized/",
+          "title": "Restructuring: Port of Wilmington Recapitalized by Enstructure",
+          "description": "Made some slides showing how critical this port is to supporting America's banana addiction"
+        },
+        {
+          "url": "https://www.businesswire.com/news/home/20240226186085/en/Barings-Kline-Hill-Partners-and-Adams-Street-Partners-Co-Lead-Closing-of-TRP-Capital-Partners-Continuation-Fund-for-GenOx-Transportation-Inc.",
+          "title": "Continuation Vehicle: Single Asset CV for GenOx Transportation",
+          "description": "Built the CIM and learned a lot about cryogenic gas transport"
+        },
+        {
+          "url": "https://www.businesswire.com/news/home/20240201861788/en/AIT-Worldwide-Logistics-Acquires-Global-Transport-Solutions-Group",
+          "title": "Sellside: Sale of Global Transport Solutions to AIT Worldwide",
+          "description": "Flew to Rotterdam and built the CIM with management"
+        },
+        {
+          "url": "https://www.prnewswire.com/news-releases/icv-partners-announces-successful-exit-from-horizon-air-freight-302232004.html",
+          "title": "Sellside: Sale of Horizon Air Freight to GHK Capital Partners",
+          "description": "Built the CIM and projections model; ran intensive diligence; learned a lot about ocean shipping"
+        },
+        {
+          "url": "https://www.londonstockexchange.com/news-article/MCG/proposed-sale-of-north-america-school-bus/17005162",
+          "title": "Buyside: Mobico North American School Bus Acquired by I Square Capital Advisors",
+          "description": "Chief of Staff extroardinaire, coordinating a dozen consultants' diligence and building board decks and valuation models"
+        },
+        {
+          "url": "https://gobeacon.com/about-us/investor-relations/",
+          "title": "LevFin: Refinancing for Beacon Mobility",
+          "description": "Made some pretty slides telling lenders about the US school bus business"
+        }
+      ]
     },
     {
       "title": "University",

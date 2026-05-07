@@ -1,6 +1,8 @@
 # Changelog
 
 ## 2026-05-07
+- Home headshot slideshow slot 2 and `index.html` preload use `assets/headshot2.jpeg` (with `?v=2` cache-bust); Adventures diving tile uses the same image URL so both load that file from the assets folder.
+- Work: Banking section lists eight linked headlines with description subtext; work cards can use an optional `items` array in `work.json`.
 - Fixed invalid JSON in `assets/data/adventures.json` (broken string on Bangkok title) that prevented the whole site from loading.
 - Adventures: card headings use `title` from JSON exactly as written (no capitalization or filename formatting).
 - Adventures: hover-only image overlays; quote-style serif titles at double the former card title size (28px, 24px on small screens); 12pt sans descriptions; titles from filenames without extension (first letter capitalized, underscores as spaces).
