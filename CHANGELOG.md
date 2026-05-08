@@ -1,6 +1,19 @@
 # Changelog
 
 ## 2026-05-07
+- Receive-sound fix: switched back to valid `assets/sounds/imessage-receive.mp3` because the downloaded Zedge asset resolved to an image file (not playable audio).
+- Audio tweak: lowered send sound volume and switched receive sound to the requested Zedge source file (`assets/sounds/imessage-receive-zedge.mp3`).
+- Replaced synthesized chat tones with online CC0 message sound files (`assets/sounds/imessage-send.mp3` and `assets/sounds/imessage-receive.mp3`) to better match iMessage-style send/receive audio.
+- Contact interaction polish: Enter key submits (Shift+Enter keeps newline), sent/received bubbles animate upward into thread, and lightweight iMessage-like send/receive sound effects play after user interaction.
+- Contact panel resized to a tall/narrow phone-like aspect ratio; composer text vertically centered; delivered confirmation copy updated; click-trigger added so prompts start immediately on tapping iMessage field.
+- Contact fixes: only the full contact tab thread now uses `id=\"contact-chat-thread\"` (so prompts/sent bubbles append in the visible chat), and composer height was adjusted to match bubble height more closely.
+- Contact UI tuning: composer height reduced, LinkedIn button sized to match send button, bubble text size matched to input text size, and default outgoing bubble set to \"sounds good 🤙\".
+- Contact updates: swapped avatar image, removed heading/subheader and standalone name/email inputs, removed email icon button, and added sequential prompts in the iMessage composer (name -> topic -> email) before Formspree submit.
+- Rebuilt Contact tab to an iMessage-style chat composer UI and wired live Formspree endpoint `https://formspree.io/f/xlgzwjal` in `contact.json` (AJAX submit flow retained).
+- Work headers reverted to plain text for all sections (logo header rendering removed).
+- Cache-busted Work data load in `script.js` (`work.json?v=work-logos`) so new Work logos and items reliably appear after refresh.
+- Work section headers now support logos per card; set Banking to Jefferies, University to University of Richmond, and High School to John Burroughs School logos.
+- Work: added linked-highlight lists with subtext to the University and High School sections (same format as Banking).
 - Home headshot slideshow slot 2 and `index.html` preload use `assets/headshot2.jpeg` (with `?v=2` cache-bust); Adventures diving tile uses the same image URL so both load that file from the assets folder.
 - Work: Banking section lists eight linked headlines with description subtext; work cards can use an optional `items` array in `work.json`.
 - Fixed invalid JSON in `assets/data/adventures.json` (broken string on Bangkok title) that prevented the whole site from loading.

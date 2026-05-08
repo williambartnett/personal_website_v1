@@ -2,7 +2,7 @@
   "_fileInfo": {
     "purpose": "Work tab quote and timeline-style cards.",
     "usedBy": "Rendered by script.js in the Work tab.",
-    "changed": "Banking card lists linked deal highlights with description subtext."
+    "changed": "Banking, University, and High School cards list linked highlights with description subtext."
   },
   "quote": {
     "text": "Determine never to be idle. No person will have occasion to complain of the want of time, who never loses any. It is wonderful how much may be done, if we are always doing.",
@@ -15,6 +15,9 @@
     },
     {
       "title": "Banking",
+      "logo": "assets/images/logos/jefferies.svg",
+      "logoKey": "jefferies",
+      "logoAlt": "Jefferies logo",
       "items": [
         {
           "url": "https://www.linkedin.com/posts/jefferies_jefferies-logistics-and-transportation-conference-ugcPost-7320797006283616257-xRD-?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB8i1BkBe5Y_Fp_AFzlvOGoYem5w4X20ED0",
@@ -48,7 +51,7 @@
         },
         {
           "url": "https://www.londonstockexchange.com/news-article/MCG/proposed-sale-of-north-america-school-bus/17005162",
-          "title": "Buyside: Mobico North American School Bus Acquired by I Square Capital Advisors",
+          "title": "Buyside: Mobico North American School Bus Acquired by I Squared Capital",
           "description": "Chief of Staff extroardinaire, coordinating a dozen consultants' diligence and building board decks and valuation models"
         },
         {
@@ -60,11 +63,54 @@
     },
     {
       "title": "University",
-      "body": "[TBD] Add notable study experiences and takeaways."
+      "logo": "assets/images/logos/university-of-richmond.svg",
+      "logoKey": "richmond",
+      "logoAlt": "University of Richmond logo",
+      "items": [
+        {
+          "url": "https://www.richmondfiji.com",
+          "title": "Richmond Fiji Website",
+          "description": "Built a website for my fraternity chapter"
+        },
+        {
+          "url": "https://www.thecollegianur.com/article/9e226914-2464-436f-8c7f-f72e5f5d4866",
+          "title": "Greek Life Reforms OpEd",
+          "description": "During my year as Interfraternity Council President I learned a lot about the drivers of greek life and put together a roadmap for the administration to fix it, based on first-principles thinking"
+        },
+        {
+          "url": "https://www.facebook.com/watch/?v=173723817734962",
+          "title": "Crew Publicity Video",
+          "description": "Always #stoked2row"
+        },
+        {
+          "url": "https://drive.google.com/file/d/1M20t5ndYf0yTYKhmAc1Lm6RfzgLTmt0Z/view?usp=share_link",
+          "title": "Fiji Alumni Newsletter",
+          "description": "Keeping up relations with graduate brothers"
+        }
+      ]
     },
     {
       "title": "High School",
-      "body": "[TBD] Add early milestones that shaped your path."
+      "logo": "assets/images/logos/john-burroughs.png",
+      "logoKey": "burroughs",
+      "logoAlt": "John Burroughs School logo",
+      "items": [
+        {
+          "url": "https://www.stltoday.com/pr/news/john-burroughs-school-achieves-mpg-with-super-mileage-car/article_a433aa16-498e-11e8-81d8-5cb9017bff17.html",
+          "title": "Super Mileage Vehicle Club",
+          "description": "Designed and built a car that got 519MPG at the international Shell Eco Marathon in Sonoma, CA. Also competed on the streets of downtown Detroit for two years."
+        },
+        {
+          "url": "https://drive.google.com/file/d/1Zyc5x08Wk8qZF0Q5tkr5wUooi7jIGP0s/view?usp=share_link",
+          "title": "William's Lawn Care",
+          "description": "Mowed lawns all weekend every summer for seven years. Nothing may ever be as satisfying as finishing a job and admiring the perfect stripes and crisp edges. "
+        },
+        {
+          "url": "https://drive.google.com/drive/folders/1KxfLQ4siz5UbbDd0D3hdUi19bJzevWRa?usp=sharing",
+          "title": "The Hague International Model United Nations (Held in Qatar)",
+          "description": "Press Team Head of Photographers. Produced a daily print newspaper and made a nice video to show the school back home."
+        }
+      ]
     }
   ]
 }

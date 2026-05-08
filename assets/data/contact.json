@@ -2,16 +2,19 @@
   "_fileInfo": {
     "purpose": "Contact section text, links, and form endpoint.",
     "usedBy": "Rendered by script.js in William preview and Contact tab.",
-    "changed": "Initial settings for marco-inspired contact card with LinkedIn swap."
+    "changed": "iMessage-style chat content with step-by-step prompts and updated contact avatar photo."
   },
-  "heading": "I'd love to connect.",
-  "description": "Reach out anytime. You can send a message below and I'll reply by email.",
+  "heading": "Let's build something great together.",
+  "description": "Send me a note below and it goes straight to my email.",
+  "chatIncomingName": "William",
+  "chatIncomingText": "want to work together? just want to chat? send me a text here (no, for real)",
+  "chatOutgoingText": "sounds good 🤙",
   "name": "William Bartnett",
   "emailAddress": "william.bartnett@gmail.com",
   "linkedinUrl": "https://linkedin.com/in/williambartnett",
   "photo": {
-    "src": "assets/IMG_2086.jpeg",
+    "src": "assets/images/contact/contact-photo.png",
     "alt": "Headshot of William Bartnett"
   },
-  "formspreeEndpoint": "https://formspree.io/f/your-form-id"
+  "formspreeEndpoint": "https://formspree.io/f/xlgzwjal"
 }

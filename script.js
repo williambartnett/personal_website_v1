@@ -8,7 +8,7 @@ CHANGED: Work tab supports optional item lists with linked titles and subtext.
 // --- App configuration and state
 const DATA_FILES = {
   profile: "assets/data/profile.json",
-  work: "assets/data/work.json",
+  work: "assets/data/work.json?v=work-logos",
   now: "assets/data/now.json",
   adventures: "assets/data/adventures.json",
   contact: "assets/data/contact.json"
@@ -344,6 +344,9 @@ function renderNowSection() {
 /**
  * Renders one work history card: plain body or a list of linked titles with description subtext.
  */
+/**
+ * Renders one work history card: plain body or a list of linked titles with description subtext.
+ */
 function renderWorkCardMarkup(cardItem) {
   const hasItems = Array.isArray(cardItem.items) && cardItem.items.length > 0;
 
@@ -421,17 +424,24 @@ function renderAdventuresSection() {
  */
 function buildContactMarkup(includeForm) {
   const contactData = appState.contact;
+  const incomingName = contactData.chatIncomingName || contactData.name;
+  const incomingText = contactData.chatIncomingText || "Want to work together? Send me a message here.";
+  const outgoingText = contactData.chatOutgoingText || "sounds good 🤙";
   const formMarkup = includeForm
     ? `
-      <form id="contact-form" class="contact-form" novalidate>
-        <label for="contact-name">Name</label>
-        <input id="contact-name" name="name" type="text" required />
-        <label for="contact-email">Email</label>
-        <input id="contact-email" name="email" type="email" required />
-        <label for="contact-message">Message</label>
-        <textarea id="contact-message" name="message" required></textarea>
+      <form id="contact-form" class="contact-form contact-imessage-form" novalidate>
+        <div class="contact-composer-row">
+          <div class="contact-composer-icons">
+            <a class="icon-link icon-link-flat" href="${escapeHtml(contactData.linkedinUrl)}" target="_blank" rel="noreferrer" aria-label="LinkedIn">in</a>
+          </div>
+          <label class="sr-only" for="contact-message">Message</label>
+          <textarea id="contact-message" name="chatInput" rows="1" placeholder="iMessage" required></textarea>
+          <button type="submit" class="contact-send-button" aria-label="Send message">↑</button>
+        </div>
+        <input id="contact-name" name="name" type="hidden" />
+        <input id="contact-email" name="email" type="hidden" />
+        <input id="contact-message-hidden" name="message" type="hidden" />
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-        <button type="submit">Send message</button>
         <p id="contact-form-message" class="contact-form-message" aria-live="polite"></p>
       </form>
     `
@@ -439,17 +449,19 @@ function buildContactMarkup(includeForm) {
 
   return `
     <article class="card contact-card">
-      <div class="contact-left">
-        <h2>${escapeHtml(contactData.heading)}</h2>
-        <p>${escapeHtml(contactData.description)}</p>
-        <p><strong>${escapeHtml(contactData.name)}</strong></p>
-        <div class="contact-links">
-          <a class="icon-link" href="${escapeHtml(contactData.linkedinUrl)}" target="_blank" rel="noreferrer" aria-label="LinkedIn">in</a>
-          <a class="icon-link" href="mailto:${escapeHtml(contactData.emailAddress)}" aria-label="Email">mail</a>
+      <div class="contact-chat-shell">
+        <div ${includeForm ? 'id="contact-chat-thread"' : ""} class="contact-chat-thread">
+          <div class="contact-bubble-row contact-bubble-row-incoming">
+            <img class="contact-avatar" src="${escapeHtml(contactData.photo.src)}" alt="${escapeHtml(contactData.photo.alt)}" />
+            <div>
+              <p class="contact-chat-name">${escapeHtml(incomingName)}</p>
+              <p class="contact-bubble contact-bubble-incoming">${escapeHtml(incomingText)}</p>
+            </div>
+          </div>
+          <div class="contact-bubble-row contact-bubble-row-outgoing">
+            <p class="contact-bubble contact-bubble-outgoing">${escapeHtml(outgoingText)}</p>
+          </div>
         </div>
-      </div>
-      <div class="contact-right">
-        <img src="${escapeHtml(contactData.photo.src)}" alt="${escapeHtml(contactData.photo.alt)}" />
         ${formMarkup}
       </div>
     </article>
@@ -499,22 +511,188 @@ function validateContactInput(nameValue, emailValue, messageValue) {
 function initializeContactForm() {
   const formElement = document.getElementById("contact-form");
   const formMessageElement = document.getElementById("contact-form-message");
+  const chatThreadElement = document.getElementById("contact-chat-thread");
+  const messageInputElement = document.getElementById("contact-message");
+  const nameFieldElement = document.getElementById("contact-name");
+  const emailFieldElement = document.getElementById("contact-email");
+  const hiddenMessageFieldElement = document.getElementById("contact-message-hidden");
 
-  if (!formElement || !formMessageElement) {
+  if (
+    !formElement ||
+    !formMessageElement ||
+    !chatThreadElement ||
+    !messageInputElement ||
+    !nameFieldElement ||
+    !emailFieldElement ||
+    !hiddenMessageFieldElement
+  ) {
     return;
   }
+
+  const contactData = appState.contact;
+  const promptNameText = "what's your name?";
+  const promptTopicText = "nice to meet you :) what do you want to talk about?";
+  const promptEmailText = "cool. what's your email?";
+  const williamReplyDelayMs = 1000;
+
+  const conversationState = {
+    step: "idle",
+    name: "",
+    topic: "",
+    email: ""
+  };
+
+  const sendSoundEffect = new Audio("assets/sounds/imessage-send.mp3");
+  const receiveSoundEffect = new Audio("assets/sounds/imessage_recieve.mp3");
+  sendSoundEffect.preload = "auto";
+  receiveSoundEffect.preload = "auto";
+  sendSoundEffect.volume = 0.2;
+  receiveSoundEffect.volume = 0.9;
+  let audioPrimed = false;
+
+  function primeMessageAudio() {
+    if (audioPrimed) {
+      return;
+    }
+    audioPrimed = true;
+    [sendSoundEffect, receiveSoundEffect].forEach((soundEffect) => {
+      soundEffect.muted = true;
+      const playPromise = soundEffect.play();
+      if (playPromise && typeof playPromise.then === "function") {
+        playPromise
+          .then(() => {
+            soundEffect.pause();
+            soundEffect.currentTime = 0;
+            soundEffect.muted = false;
+          })
+          .catch(() => {
+            soundEffect.muted = false;
+          });
+      } else {
+        soundEffect.muted = false;
+      }
+    });
+  }
+
+  function playMessageTone(isOutgoingTone) {
+    const sourceEffect = isOutgoingTone ? sendSoundEffect : receiveSoundEffect;
+    const oneShotEffect = sourceEffect.cloneNode();
+    oneShotEffect.volume = sourceEffect.volume;
+    oneShotEffect.play().catch(() => {});
+  }
+
+  function appendIncomingBubble(textValue) {
+    window.setTimeout(() => {
+      const rowElement = document.createElement("div");
+      rowElement.className = "contact-bubble-row contact-bubble-row-incoming contact-generated-row contact-bubble-enter";
+      rowElement.innerHTML = `
+        <img class="contact-avatar" src="${escapeHtml(contactData.photo.src)}" alt="${escapeHtml(contactData.photo.alt)}" />
+        <div>
+          <p class="contact-chat-name">${escapeHtml(contactData.chatIncomingName || contactData.name)}</p>
+          <p class="contact-bubble contact-bubble-incoming">${escapeHtml(textValue)}</p>
+        </div>
+      `;
+      chatThreadElement.appendChild(rowElement);
+      requestAnimationFrame(() => rowElement.classList.add("is-visible"));
+      playMessageTone(false);
+      chatThreadElement.scrollTop = chatThreadElement.scrollHeight;
+    }, williamReplyDelayMs);
+  }
+
+  function appendOutgoingBubble(textValue) {
+    const rowElement = document.createElement("div");
+    rowElement.className = "contact-bubble-row contact-bubble-row-outgoing contact-generated-row contact-bubble-enter";
+    rowElement.innerHTML = `<p class="contact-bubble contact-bubble-outgoing">${escapeHtml(textValue)}</p>`;
+    chatThreadElement.appendChild(rowElement);
+    requestAnimationFrame(() => rowElement.classList.add("is-visible"));
+    playMessageTone(true);
+    chatThreadElement.scrollTop = chatThreadElement.scrollHeight;
+  }
+
+  function startConversation() {
+    if (conversationState.step !== "idle") {
+      return;
+    }
+    conversationState.step = "await_name";
+    appendIncomingBubble(promptNameText);
+  }
+
+  function autoResizeComposer() {
+    if (!messageInputElement.value.trim()) {
+      messageInputElement.style.height = "28px";
+      return;
+    }
+    messageInputElement.style.height = "auto";
+    messageInputElement.style.height = `${messageInputElement.scrollHeight}px`;
+  }
+
+  autoResizeComposer();
+  messageInputElement.addEventListener("focus", primeMessageAudio);
+  messageInputElement.addEventListener("input", autoResizeComposer);
+  messageInputElement.addEventListener("keydown", (keyboardEvent) => {
+    primeMessageAudio();
+    if (keyboardEvent.key === "Enter" && !keyboardEvent.shiftKey) {
+      keyboardEvent.preventDefault();
+      formElement.requestSubmit();
+    }
+  });
+  messageInputElement.addEventListener("focus", startConversation);
+  messageInputElement.addEventListener("click", () => {
+    primeMessageAudio();
+    startConversation();
+  });
 
   formElement.addEventListener("submit", async (submitEvent) => {
     submitEvent.preventDefault();
     formMessageElement.className = "contact-form-message";
     formMessageElement.textContent = "";
 
-    const formData = new FormData(formElement);
-    const nameValue = String(formData.get("name") || "");
-    const emailValue = String(formData.get("email") || "");
-    const messageValue = String(formData.get("message") || "");
+    if (conversationState.step === "idle") {
+      startConversation();
+      messageInputElement.focus();
+      return;
+    }
 
-    const validationError = validateContactInput(nameValue, emailValue, messageValue);
+    const answerValue = messageInputElement.value.trim();
+    if (!answerValue) {
+      formMessageElement.classList.add("is-error");
+      formMessageElement.textContent = "Please type a response before sending.";
+      return;
+    }
+
+    if (conversationState.step === "await_email") {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(answerValue)) {
+        formMessageElement.classList.add("is-error");
+        formMessageElement.textContent = "Please enter a valid email address.";
+        return;
+      }
+    }
+
+    appendOutgoingBubble(answerValue);
+    messageInputElement.value = "";
+    autoResizeComposer();
+
+    if (conversationState.step === "await_name") {
+      conversationState.name = answerValue;
+      conversationState.step = "await_topic";
+      appendIncomingBubble(promptTopicText);
+      return;
+    }
+
+    if (conversationState.step === "await_topic") {
+      conversationState.topic = answerValue;
+      conversationState.step = "await_email";
+      appendIncomingBubble(promptEmailText);
+      return;
+    }
+
+    conversationState.email = answerValue;
+    nameFieldElement.value = conversationState.name;
+    emailFieldElement.value = conversationState.email;
+    hiddenMessageFieldElement.value = conversationState.topic;
+
+    const validationError = validateContactInput(conversationState.name, conversationState.email, conversationState.topic);
     if (validationError) {
       formMessageElement.classList.add("is-error");
       formMessageElement.textContent = validationError;
@@ -523,6 +701,7 @@ function initializeContactForm() {
 
     try {
       const endpoint = appState.contact.formspreeEndpoint;
+      const formData = new FormData(formElement);
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
@@ -535,13 +714,19 @@ function initializeContactForm() {
         throw new Error(`Contact submit failed: ${response.status}`);
       }
 
+      appendIncomingBubble("Delivered! If ur not a bot I'll get back to you :)");
       formElement.reset();
+      autoResizeComposer();
+      conversationState.step = "idle";
+      conversationState.name = "";
+      conversationState.topic = "";
+      conversationState.email = "";
       formMessageElement.classList.add("is-success");
       formMessageElement.textContent = "Thanks - your message was sent.";
     } catch (submitError) {
       console.error("Contact form submission failed.", {
         operation: "submitContactForm",
-        input: { nameValue, emailValue },
+        input: { nameValue: conversationState.name, emailValue: conversationState.email },
         error: submitError instanceof Error ? submitError.message : String(submitError)
       });
       formMessageElement.classList.add("is-error");
