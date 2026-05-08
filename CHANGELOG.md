@@ -1,5 +1,32 @@
 # Changelog
 
+## 2026-05-08
+- Contact tab: added faux iOS status bar (12-hour clock, full signal bars, full battery, no Wi‑Fi), profile header with same avatar as chat thread (`contact.json` photo), name + location pill (`locationLine`), and increased card height to fit the header.
+- Typography: replaced all former DM Serif Display usage with a single serif stack using **Instrument Serif** (Google Fonts) via `--font-serif` for section titles, quotes, and adventure overlay titles; body copy remains DM Sans.
+- Layout stability: `scrollbar-gutter: stable` on `html` to stop the nav shifting when the vertical scrollbar appears between tabs; tab bar uses a fixed-width 4-column grid and uniform tab font-weight so the pill does not resize when the active tab changes.
+- Spotify list rows: added layout containment, GPU-friendly thumbnail layer, and text-column `min-width: 0` to reduce hover/click micro-jitter on album thumbnails.
+- Home media app cards (Spotify, Beli, Goodreads, Letterboxd): typography now uses the iOS system UI font stack (San Francisco on Apple devices via `-apple-system` / `system-ui`) so list-style text matches iPhone native apps more closely than site-wide DM Sans.
+- Nav: restyled primary tabs as a white pill bar with light border and soft shadow; inactive tabs are gray text, active tab gets the inner highlight pill (light gray fill, bold). Label order Home, Adventures, Work, Contact; no notification dot.
+- Adventures: Bangkok card image URL now includes `?v=2` cache-bust so an updated `bangkok.JPG` on disk shows without stale browser cache.
+- Fixed Adventures top quote rendering in `script.js` by reading `adventures.quote.text` (instead of rendering the whole quote object) and conditionally showing `adventures.quote.author` so the header text no longer displays as `[object Object]`.
+- Home About text now preserves JSON newline characters (`\n`) by setting `.about-row p { white-space: pre-line; }`, so manual line breaks render in the "My Values" section.
+- Home headshot slideshow now crossfades between images (opacity dissolve) instead of sliding horizontally.
+- Contact form success flow no longer shows the extra line "Thanks - your message was sent."; only the chat-style delivered confirmation remains.
+- Spotify rows now support optional `audioClip` preview URLs in `now.json`; rows with clips play preview audio on hover and show a gray play overlay on the album thumbnail when the row is hovered or playing.
+- Spotify updates: replaced Whiskey Myers with Kid Rock's "All Summer Long", replaced Steely Dan track with "Peg", updated related cover art/text, wired all Spotify rows to local `assets/sounds/*` clips, and switched playback to click-anywhere toggle on each song row.
+- Spotify player polish: fixed the Kid Rock cover URL, added a circular progress donut around the play control that fills during playback and resets on completion, and added explicit play/pause button state visuals on click.
+- Spotify UI stability: removed hover/click micro-jitter by constraining the play badge and progress ring geometry within the thumbnail bounds and using fixed icon sizing.
+- Spotify UI stability follow-up: replaced text-based play/pause glyph swaps with fixed-shape CSS icons and set a fixed row height to eliminate remaining hover/click layout jitter.
+- Beli: added "Brooklyn" and "Collina Eatery" rows under existing reviews in `now.json`, using `Brooklyn_thumb.png` and `Collina_thumb.png`; extended Beli thumbnail fallback list in `script.js`.
+- Beli: corrected The Brooklyn to Scott's Addition Historic District, Richmond, VA with Beli score 9.5; added Collina Eatery score 8.8 (locations and scores from review screenshots).
+- Goodreads / What I'm Reading: added Joan Didion's *Slouching Towards Bethlehem* using local cover thumbnail `assets/images/media/slouching-towards-bethlehem-thumb.png` in `now.json`.
+- Letterboxd: added "The Cannonball Run" and "Dances with Wolves", and replaced generic movie links with per-title Letterboxd URLs (direct film pages where available, search links for ambiguous titles).
+- Letterboxd: updated Cannonball Run and Dances with Wolves entries to use their correct poster thumbnails.
+- Home page: removed the Contact form preview block; contact form remains available only on the Contact tab.
+- Beli: updated each restaurant row URL to a corresponding Google Maps link (name + location search query).
+- Beli: McDonald's row now uses the provided direct Google Maps short link ([maps.app.goo.gl/AWu7jd1cRePAcjHLA](https://maps.app.goo.gl/AWu7jd1cRePAcjHLA)).
+- Beli: McDonald's location subtitle shortened to "Budapest, Hungary".
+
 ## 2026-05-07
 - Receive-sound fix: switched back to valid `assets/sounds/imessage-receive.mp3` because the downloaded Zedge asset resolved to an image file (not playable audio).
 - Audio tweak: lowered send sound volume and switched receive sound to the requested Zedge source file (`assets/sounds/imessage-receive-zedge.mp3`).

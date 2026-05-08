@@ -3,6 +3,7 @@ This file loads JSON content and renders all site sections.
 It is called by index.html and controls tab switching and contact form submission.
 CHANGED: Updated media panes to show multi-item native-style lists.
 CHANGED: Work tab supports optional item lists with linked titles and subtext.
+CHANGED: Contact tab includes faux iOS status bar and profile header (same photo as chat avatar) above the chat thread.
 */
 
 // --- App configuration and state
@@ -208,7 +209,13 @@ function getAutoThumbnail(cardKey, itemIndex) {
       "assets/images/media/spotify-cover-4.png",
       "assets/images/media/spotify-cover-5.png"
     ],
-    beli: ["assets/images/media/beli-thumb-1.png", "assets/images/media/beli-thumb-2.png", "assets/images/media/beli-thumb-3.png"],
+    beli: [
+      "assets/images/media/beli-thumb-1.png",
+      "assets/images/media/beli-thumb-2.png",
+      "assets/images/media/beli-thumb-3.png",
+      "assets/images/media/Brooklyn_thumb.png",
+      "assets/images/media/Collina_thumb.png"
+    ],
     goodreads: [
       "assets/images/media/goodreads-cover-1.png",
       "assets/images/media/goodreads-cover-2.png",
@@ -216,7 +223,8 @@ function getAutoThumbnail(cardKey, itemIndex) {
       "assets/images/media/goodreads-cover-4.png",
       "assets/images/media/goodreads-cover-5.png",
       "assets/images/media/goodreads-cover-6.png",
-      "assets/images/media/goodreads-cover-7.png"
+      "assets/images/media/goodreads-cover-7.png",
+      "assets/images/media/slouching-towards-bethlehem-thumb.png"
     ],
     letterboxd: [
       "assets/images/media/letterboxd-cover-1.png",
@@ -254,15 +262,33 @@ function renderNowCardItems(cardItem) {
   if (cardItem.key === "spotify") {
     return cardItem.items
       .map(
-        (item) => `
-          <a class="spotify-item" href="${escapeHtml(item.url)}" target="_blank" rel="noreferrer">
-            <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.thumbnailAlt)}" />
+        (item) => {
+          const hasAudioClip = typeof item.audioClip === "string" && item.audioClip.trim().length > 0;
+          const audioClipUrl = hasAudioClip ? item.audioClip.trim() : "";
+
+          return `
+          <a
+            class="spotify-item ${hasAudioClip ? "has-preview" : ""}"
+            href="${escapeHtml(item.url)}"
+            target="_blank"
+            rel="noreferrer"
+            ${hasAudioClip ? `data-audio-clip="${escapeHtml(audioClipUrl)}"` : ""}
+          >
+            <div class="spotify-thumb">
+              <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.thumbnailAlt)}" />
+              ${
+                hasAudioClip
+                  ? '<span class="spotify-play-badge" aria-hidden="true"><span class="spotify-play-ring"></span><span class="spotify-play-icon"><span class="spotify-icon-play"></span><span class="spotify-icon-pause"></span></span></span>'
+                  : ""
+              }
+            </div>
             <div>
               <p class="spotify-title">${escapeHtml(item.primaryText)}</p>
               <p class="spotify-artist">${escapeHtml(item.secondaryText)}</p>
             </div>
           </a>
-        `
+        `;
+        }
       )
       .join("");
   }
@@ -339,6 +365,133 @@ function renderNowSection() {
     .join("");
 
   nowCardsElement.innerHTML = cardsMarkup;
+  initializeSpotifyPlayback();
+}
+
+/**
+ * Plays or pauses Spotify clips when a song row is clicked.
+ */
+function initializeSpotifyPlayback() {
+  const spotifyItems = document.querySelectorAll(".spotify-item[data-audio-clip]");
+  let activeAudio = null;
+  let activeItem = null;
+
+  /**
+   * Updates one row icon and state classes based on playback status.
+   */
+  function setItemState(itemElement, state) {
+    itemElement.classList.remove("is-preview-playing", "is-preview-paused");
+
+    if (state === "playing") {
+      itemElement.classList.add("is-preview-playing");
+      return;
+    }
+
+    if (state === "paused") {
+      itemElement.classList.add("is-preview-paused");
+      return;
+    }
+  }
+
+  /**
+   * Sets the radial progress ring for one row.
+   */
+  function setItemProgress(itemElement, progressPercent) {
+    const boundedPercent = Math.max(0, Math.min(100, progressPercent));
+    itemElement.style.setProperty("--play-progress", `${boundedPercent}%`);
+  }
+
+  /**
+   * Stops the currently active preview clip and clears row state.
+   */
+  function stopActivePreview(resetPosition = true) {
+    if (activeAudio) {
+      activeAudio.pause();
+
+      if (resetPosition) {
+        activeAudio.currentTime = 0;
+      }
+
+      activeAudio = null;
+    }
+
+    if (activeItem) {
+      setItemState(activeItem, "idle");
+      setItemProgress(activeItem, 0);
+      activeItem = null;
+    }
+  }
+
+  spotifyItems.forEach((itemElement) => {
+    const clipUrl = itemElement.getAttribute("data-audio-clip");
+
+    if (!clipUrl) {
+      return;
+    }
+
+    const previewAudio = new Audio(clipUrl);
+    previewAudio.preload = "metadata";
+
+    previewAudio.addEventListener("timeupdate", () => {
+      if (activeAudio !== previewAudio || activeItem !== itemElement || !previewAudio.duration) {
+        return;
+      }
+
+      const playbackProgress = (previewAudio.currentTime / previewAudio.duration) * 100;
+      setItemProgress(itemElement, playbackProgress);
+    });
+
+    previewAudio.addEventListener("ended", () => {
+      if (activeAudio === previewAudio) {
+        stopActivePreview(true);
+      }
+    });
+
+    itemElement.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      if (activeItem === itemElement && activeAudio === previewAudio) {
+        if (previewAudio.paused) {
+          previewAudio.play().then(() => {
+            setItemState(itemElement, "playing");
+          }).catch((playbackError) => {
+            console.warn("Spotify preview clip could not resume.", {
+              operation: "resumeSpotifyPreview",
+              input: { clipUrl },
+              error: playbackError instanceof Error ? playbackError.message : String(playbackError)
+            });
+            setItemState(itemElement, "paused");
+          });
+        } else {
+          previewAudio.pause();
+          setItemState(itemElement, "paused");
+        }
+
+        return;
+      }
+
+      stopActivePreview(true);
+      activeAudio = previewAudio;
+      activeItem = itemElement;
+      setItemState(itemElement, "playing");
+      setItemProgress(itemElement, 0);
+      previewAudio.currentTime = 0;
+      previewAudio.play().catch((playbackError) => {
+        console.warn("Spotify preview clip could not start.", {
+          operation: "playSpotifyPreview",
+          input: { clipUrl },
+          error: playbackError instanceof Error ? playbackError.message : String(playbackError)
+        });
+        stopActivePreview();
+      });
+    });
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopActivePreview();
+    }
+  });
 }
 
 /**
@@ -398,6 +551,9 @@ function renderWorkSection() {
  */
 function renderAdventuresSection() {
   const adventuresContentElement = getRequiredElement("adventures-content");
+  const adventuresQuote = appState.adventures.quote;
+  const adventuresQuoteText = typeof adventuresQuote === "string" ? adventuresQuote : adventuresQuote?.text || "";
+  const adventuresQuoteAuthor = typeof adventuresQuote === "string" ? "" : adventuresQuote?.author || "";
 
   const cardsMarkup = appState.adventures.cards
     .map(
@@ -414,7 +570,8 @@ function renderAdventuresSection() {
     .join("");
 
   adventuresContentElement.innerHTML = `
-    <p class="quote">${escapeHtml(appState.adventures.quote)}</p>
+    <p class="quote">${escapeHtml(adventuresQuoteText)}</p>
+    ${adventuresQuoteAuthor ? `<p class="quote-author"> ${escapeHtml(adventuresQuoteAuthor)}</p>` : ""}
     <div class="adventure-grid">${cardsMarkup}</div>
   `;
 }
@@ -427,6 +584,43 @@ function buildContactMarkup(includeForm) {
   const incomingName = contactData.chatIncomingName || contactData.name;
   const incomingText = contactData.chatIncomingText || "Want to work together? Send me a message here.";
   const outgoingText = contactData.chatOutgoingText || "sounds good 🤙";
+  const headerPhotoSrc = contactData.photo.src;
+  const headerPhotoAlt = contactData.photo.alt;
+  const headerName = contactData.chatIncomingName || contactData.name || "William";
+  const headerLocation =
+    typeof contactData.locationLine === "string" && contactData.locationLine.trim().length > 0
+      ? contactData.locationLine.trim()
+      : "Richmond, VA";
+  const phoneHeaderMarkup = includeForm
+    ? `
+      <div class="contact-phone-header">
+        <div class="contact-status-bar">
+          <time id="contact-status-time" class="contact-status-time"></time>
+          <div class="contact-status-indicators" aria-hidden="true">
+            <div class="contact-signal-bars">
+              <span class="contact-signal-bar"></span>
+              <span class="contact-signal-bar"></span>
+              <span class="contact-signal-bar"></span>
+              <span class="contact-signal-bar"></span>
+            </div>
+            <div class="contact-battery" title="Battery">
+              <span class="contact-battery-level"></span>
+            </div>
+          </div>
+        </div>
+        <div class="contact-profile-header">
+          <img class="contact-profile-photo-large" src="${escapeHtml(headerPhotoSrc)}" alt="${escapeHtml(headerPhotoAlt)}" />
+          <div class="contact-profile-pill">
+            <div class="contact-profile-name-row">
+              <span class="contact-profile-name">${escapeHtml(headerName)}</span>
+              <span class="contact-profile-chevron">›</span>
+            </div>
+            <p class="contact-profile-location">${escapeHtml(headerLocation)}</p>
+          </div>
+        </div>
+      </div>
+    `
+    : "";
   const formMarkup = includeForm
     ? `
       <form id="contact-form" class="contact-form contact-imessage-form" novalidate>
@@ -449,6 +643,7 @@ function buildContactMarkup(includeForm) {
 
   return `
     <article class="card contact-card">
+      ${phoneHeaderMarkup}
       <div class="contact-chat-shell">
         <div ${includeForm ? 'id="contact-chat-thread"' : ""} class="contact-chat-thread">
           <div class="contact-bubble-row contact-bubble-row-incoming">
@@ -469,15 +664,40 @@ function buildContactMarkup(includeForm) {
 }
 
 /**
- * Renders contact preview and full contact tab then wires form handling.
+ * Renders full contact tab content then wires form handling.
  */
 function renderContactSections() {
-  const previewElement = getRequiredElement("contact-preview");
   const fullContactElement = getRequiredElement("contact-content");
 
-  previewElement.innerHTML = buildContactMarkup(false);
   fullContactElement.innerHTML = buildContactMarkup(true);
   initializeContactForm();
+  startContactStatusClock();
+}
+
+/**
+ * Updates the faux iOS status bar clock in 12-hour locale time and refreshes every minute.
+ */
+function startContactStatusClock() {
+  const timeElement = document.getElementById("contact-status-time");
+  if (!timeElement) {
+    return;
+  }
+
+  /**
+   * Writes the current time into the status bar element.
+   */
+  function updateContactStatusTime() {
+    const now = new Date();
+    timeElement.textContent = now.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true
+    });
+    timeElement.dateTime = now.toISOString();
+  }
+
+  updateContactStatusTime();
+  window.setInterval(updateContactStatusTime, 60000);
 }
 
 // --- Contact form
@@ -721,8 +941,7 @@ function initializeContactForm() {
       conversationState.name = "";
       conversationState.topic = "";
       conversationState.email = "";
-      formMessageElement.classList.add("is-success");
-      formMessageElement.textContent = "Thanks - your message was sent.";
+      formMessageElement.textContent = "";
     } catch (submitError) {
       console.error("Contact form submission failed.", {
         operation: "submitContactForm",

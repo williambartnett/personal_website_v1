@@ -2,12 +2,15 @@
   "_fileInfo": {
     "purpose": "Adventures tab quote and image grid data.",
     "usedBy": "Rendered by script.js into photo cards.",
-    "changed": "Diving card image uses headshot2.jpeg after on-disk swap so the adventure tile shows the dive photo with original Little St. James copy."
+    "changed": "Bangkok tile image URL cache-busted (?v=2) so replaced bangkok.JPG on disk shows in the browser."
   },
-  "quote": "Life is not a spectator sport!",
+  "quote": {
+    "text": "Life is not a spectator sport!",
+    "author": "We have so much to learn from the world, and I try to get out and experience it as much as I can."
+  },
   "cards": [
     {
-      "image": "assets/images/adventures/bangkok.JPG",
+      "image": "assets/images/adventures/bangkok.JPG?v=2",
       "alt": "bangkok.JPG adventure photo",
       "title": "Bangkok",
       "subtext": "Have never seen so many Buddhas in one place, each larger than the last"

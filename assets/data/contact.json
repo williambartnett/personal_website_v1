@@ -2,11 +2,12 @@
   "_fileInfo": {
     "purpose": "Contact section text, links, and form endpoint.",
     "usedBy": "Rendered by script.js in William preview and Contact tab.",
-    "changed": "iMessage-style chat content with step-by-step prompts and updated contact avatar photo."
+    "changed": "Contact tab header uses same photo as chat avatar; faux iOS status bar with full battery."
   },
   "heading": "Let's build something great together.",
   "description": "Send me a note below and it goes straight to my email.",
   "chatIncomingName": "William",
+  "locationLine": "Richmond, VA",
   "chatIncomingText": "want to work together? just want to chat? send me a text here (no, for real)",
   "chatOutgoingText": "sounds good 🤙",
   "name": "William Bartnett",

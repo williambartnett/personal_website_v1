@@ -2,7 +2,7 @@
   "_fileInfo": {
     "purpose": "Live now cards: listening, eating, reading, watching.",
     "usedBy": "Rendered by script.js into William tab media cards.",
-    "changed": "Initial card seed values with placeholders."
+    "changed": "Beli updates; Goodreads Slouching Towards Bethlehem uses custom cover thumbnail in assets/images/media."
   },
   "cards": [
     {
@@ -11,39 +11,44 @@
       "iconColor": "#1DB954",
       "items": [
         {
-          "thumbnail": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/31/1f/96/311f9654-62c1-ad68-3ae6-91df9b73220a/756.jpg/100x100bb.jpg",
-          "thumbnailAlt": "Lonely East Texas Nights album art",
-          "primaryText": "Lonely East Texas Nights",
-          "secondaryText": "Whiskey Myers",
-          "url": "https://open.spotify.com/"
+          "thumbnail": "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02a3473085a2a48547a5c290a8",
+          "thumbnailAlt": "All Summer Long single cover",
+          "primaryText": "All Summer Long",
+          "secondaryText": "Kid Rock",
+          "url": "https://open.spotify.com/",
+          "audioClip": "assets/sounds/All-Summer-Long.m4a"
         },
         {
           "thumbnail": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/82/90/14/829014ad-a301-62ab-bee6-f4cca4457411/mzi.hozudery.jpg/100x100bb.jpg",
           "thumbnailAlt": "505 album art",
           "primaryText": "505",
           "secondaryText": "Arctic Monkeys",
-          "url": "https://open.spotify.com/"
+          "url": "https://open.spotify.com/",
+          "audioClip": "assets/sounds/arctic_monkeys_505.mp3"
         },
         {
           "thumbnail": "https://is1-ssl.mzstatic.com/image/thumb/Music7/v4/32/33/78/32337882-4dcf-b4ff-c2b1-988297b1aa2a/dj.bazmvvpg.jpg/100x100bb.jpg",
           "thumbnailAlt": "Fool in the Rain album art",
-          "primaryText": "Fool in the Rain - Remaster",
+          "primaryText": "Fool in the Rain",
           "secondaryText": "Led Zeppelin",
-          "url": "https://open.spotify.com/"
+          "url": "https://open.spotify.com/",
+          "audioClip": "assets/sounds/fool_in_the_rain.mp3"
         },
         {
-          "thumbnail": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/49/6e/70/496e703c-f15e-8e95-821c-f94fac1f4c8e/23UMGIM50278.rgb.jpg/100x100bb.jpg",
-          "thumbnailAlt": "Any Major Dude Will Tell You album art",
-          "primaryText": "Any Major Dude Will Tell You",
+          "thumbnail": "https://upload.wikimedia.org/wikipedia/en/4/49/Aja_album_cover.jpg",
+          "thumbnailAlt": "Aja album cover",
+          "primaryText": "Peg",
           "secondaryText": "Steely Dan",
-          "url": "https://open.spotify.com/"
+          "url": "https://open.spotify.com/",
+          "audioClip": "assets/sounds/steely_dan_peg.mp3"
         },
         {
           "thumbnail": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/26/d6/e3/26d6e339-a7a9-d61e-1b5f-0852a5515a55/886445517880.jpg/100x100bb.jpg",
           "thumbnailAlt": "Lover You Should've Come Over album art",
           "primaryText": "Lover, You Should've Come Over",
           "secondaryText": "Jeff Buckley",
-          "url": "https://open.spotify.com/"
+          "url": "https://open.spotify.com/",
+          "audioClip": "assets/sounds/lover_you_shouldve_come_over.m4a"
         }
       ]
     },
@@ -56,9 +61,9 @@
           "thumbnail": "assets/images/media/beli-thumb-1.png",
           "thumbnailAlt": "Lafayette Tavern thumbnail",
           "primaryText": "Lafayette Tavern",
-          "secondaryText": "Malvern Gardens, Richmond VA",
+          "secondaryText": "Malvern Gardens, Richmond, VA",
           "rating": "9.8",
-          "url": "https://beliapp.com/"
+          "url": "https://www.google.com/maps/search/?api=1&query=Lafayette+Tavern+1011+Lafayette+St+Richmond+VA"
         },
         {
           "thumbnail": "assets/images/media/beli-thumb-2.png",
@@ -66,15 +71,31 @@
           "primaryText": "Bar Gyu+",
           "secondaryText": "Kutchan, Japan",
           "rating": "10.0",
-          "url": "https://beliapp.com/"
+          "url": "https://www.google.com/maps/search/?api=1&query=Bar+Gyu%2B+Kutchan+Hokkaido+Japan"
         },
         {
           "thumbnail": "assets/images/media/beli-thumb-3.png",
           "thumbnailAlt": "McDonald's Budapest thumbnail",
           "primaryText": "McDonald's",
-          "secondaryText": "Nemetvolgy, Budapest, Hungary",
+          "secondaryText": "Budapest, Hungary",
           "rating": "7.4",
-          "url": "https://beliapp.com/"
+          "url": "https://maps.app.goo.gl/AWu7jd1cRePAcjHLA"
+        },
+        {
+          "thumbnail": "assets/images/media/Brooklyn_thumb.png",
+          "thumbnailAlt": "The Brooklyn Beli review thumbnail",
+          "primaryText": "The Brooklyn",
+          "secondaryText": "Scott's Addition, Richmond, VA",
+          "rating": "9.5",
+          "url": "https://www.google.com/maps/search/?api=1&query=The+Brooklyn+1616+Summit+Ave+Richmond+VA"
+        },
+        {
+          "thumbnail": "assets/images/media/Collina_thumb.png",
+          "thumbnailAlt": "Collina Eatery Beli review thumbnail",
+          "primaryText": "Collina Eatery",
+          "secondaryText": "The Hill, St. Louis, MO",
+          "rating": "8.8",
+          "url": "https://www.google.com/maps/search/?api=1&query=Collina+Eatery+2130+Macklind+Ave+St+Louis+MO"
         }
       ]
     },
@@ -88,28 +109,35 @@
           "thumbnailAlt": "Zero to One cover",
           "primaryText": "Zero to One",
           "secondaryText": "Peter Thiel",
-          "url": "https://www.goodreads.com/"
+          "url": "https://www.goodreads.com/book/show/18050143-zero-to-one"
         },
         {
           "thumbnail": "https://covers.openlibrary.org/b/id/8870797-M.jpg",
           "thumbnailAlt": "The Gatekeepers cover",
           "primaryText": "The Gatekeepers",
           "secondaryText": "Chris Whipple",
-          "url": "https://www.goodreads.com/"
+          "url": "https://www.goodreads.com/book/show/31159759-the-gatekeepers"
         },
         {
           "thumbnail": "https://covers.openlibrary.org/b/id/7414780-M.jpg",
           "thumbnailAlt": "The Alchemist cover",
           "primaryText": "The Alchemist",
           "secondaryText": "Paulo Coelho",
-          "url": "https://www.goodreads.com/"
+          "url": "https://www.goodreads.com/book/show/18144590-the-alchemist"
         },
         {
           "thumbnail": "https://covers.openlibrary.org/b/id/606529-M.jpg",
           "thumbnailAlt": "Thank You for Smoking cover",
           "primaryText": "Thank You for Smoking",
           "secondaryText": "Christopher Buckley",
-          "url": "https://www.goodreads.com/"
+          "url": "https://www.goodreads.com/book/show/1195238-thank-you-for-smoking"
+        },
+        {
+          "thumbnail": "assets/images/media/slouching-towards-bethlehem-thumb.png",
+          "thumbnailAlt": "Slouching Towards Bethlehem cover",
+          "primaryText": "Slouching Towards Bethlehem",
+          "secondaryText": "Joan Didion",
+          "url": "https://www.goodreads.com/book/show/424-slouching-towards-bethlehem"
         }
       ]
     },
@@ -123,112 +151,126 @@
           "thumbnailAlt": "Marty Supreme poster",
           "primaryText": "Marty Supreme",
           "secondaryText": "\u2605\u2605\u2605\u2605",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/search/marty%20supreme/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BYjJiNTkxMDMtYWZjZC00NDJkLTliNDQtZjIzMTAxZGI2N2NmXkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "Dead of Winter poster",
           "primaryText": "Dead of Winter",
           "secondaryText": "\u2605\u2605\u2605\u00bd",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/search/dead%20of%20winter/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BNGI0MDI4NjEtOWU3ZS00ODQyLWFhYTgtNGYxM2ZkM2Q2YjE3XkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "F1 poster",
           "primaryText": "F1",
           "secondaryText": "\u2605\u2605\u2605\u2605\u00bd",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/search/f1/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BNjIwZWY4ZDEtMmIxZS00NDA4LTg4ZGMtMzUwZTYyNzgxMzk5XkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "Sinners poster",
           "primaryText": "Sinners",
           "secondaryText": "\u2605\u2605\u2605\u2605\u00bd",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/film/sinners-2025/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BOWMwYjYzYmMtMWQ2Ni00NWUwLTg2MzAtYzkzMDBiZDIwOTMwXkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "Wicked poster",
           "primaryText": "Wicked",
           "secondaryText": "\u2605\u2605\u2605\u00bd",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/film/wicked-2024/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BM2U0MWRjZTMtMDVhNC00MzY4LTgwOTktZGQ2MDdiYTI4OWMxXkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "The Brutalist poster",
           "primaryText": "The Brutalist",
           "secondaryText": "\u2605\u2605\u2605\u2605\u00bd",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/film/the-brutalist/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BNzFhMDZmYTctOTNmZi00MjVjLThkNGItMTJhOTI2NDkzMTFiXkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "Hit Man poster",
           "primaryText": "Hit Man",
           "secondaryText": "\u2605\u2605\u2605\u00bd",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/film/hit-man-2023/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BY2M1MWUyYzctMzk1Zi00M2RkLTkwY2YtMzE4MDhiZGQwZmU5XkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "Maestro poster",
           "primaryText": "Maestro",
           "secondaryText": "\u2605\u2605\u2605\u2605\u00bd",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/film/maestro-2023/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BZjk4NGE3MWItMDRhMy00YzhiLTk0MGUtZDlkNmQxYWIxYzc2XkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "Saltburn poster",
           "primaryText": "Saltburn",
           "secondaryText": "\u2605\u2605\u2605\u2605",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/film/saltburn/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "Oppenheimer poster",
           "primaryText": "Oppenheimer",
           "secondaryText": "\u2605\u2605\u2605\u2605",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/film/oppenheimer-2023/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BYjI3NDU0ZGYtYjA2YS00Y2RlLTgwZDAtYTE2YTM5ZjE1M2JlXkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "Barbie poster",
           "primaryText": "Barbie",
           "secondaryText": "\u2605\u2605\u2605",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/film/barbie/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BNjY5YWJjODYtNDUzNy00ZGMyLTk3NTQtN2EzZmFhZTFmMDNiXkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "A Man Called Otto poster",
           "primaryText": "A Man Called Otto",
           "secondaryText": "\u2605\u2605\u2605\u00bd",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/film/a-man-called-otto/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BY2I0ZDExM2EtZTQ4OC00NGQ0LWIzYjktYWE4MDMxZDZlY2MwXkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "Don't Worry Darling poster",
           "primaryText": "Don't Worry Darling",
           "secondaryText": "\u2605\u2605",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/film/dont-worry-darling/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BYmNhOWMyNTYtNTljNC00NTU3LWFiYmQtMDBhOGU5NWFhNGU5XkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "The Whale poster",
           "primaryText": "The Whale",
           "secondaryText": "\u2605\u2605\u2605",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/film/the-whale-2022/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BODUyZjkxZDMtZGI3ZC00ZmEwLTgwMTUtYTU4OTQ5YjU4ZjRlXkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "Bullet Train poster",
           "primaryText": "Bullet Train",
           "secondaryText": "\u2605\u2605\u2605",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/film/bullet-train/"
         },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BZmFhZTNlNzctZGQzZi00MTA3LThiNjMtYWQzNjUzMjNjZjA3XkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "The Gray Man poster",
           "primaryText": "The Gray Man",
           "secondaryText": "\u2605\u2605\u2605",
-          "url": "https://letterboxd.com/"
+          "url": "https://letterboxd.com/film/the-gray-man-2022/"
+        },
+        {
+          "thumbnail": "https://upload.wikimedia.org/wikipedia/en/a/a0/Cannonball_run.jpg",
+          "thumbnailAlt": "The Cannonball Run poster",
+          "primaryText": "The Cannonball Run",
+          "secondaryText": "\u2605\u2605\u2605",
+          "url": "https://letterboxd.com/film/the-cannonball-run/"
+        },
+        {
+          "thumbnail": "https://upload.wikimedia.org/wikipedia/en/8/82/Dances_with_Wolves_poster.jpg",
+          "thumbnailAlt": "Dances with Wolves poster",
+          "primaryText": "Dances with Wolves",
+          "secondaryText": "\u2605\u2605\u2605\u2605",
+          "url": "https://letterboxd.com/film/dances-with-wolves/"
         }
       ]
     }
