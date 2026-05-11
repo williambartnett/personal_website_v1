@@ -138,6 +138,12 @@ body {
   font-size: 18px;
 }
 
+.work-card h3 {
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--primary-text);
+}
+
 .about-panel {
   min-height: 100%;
 }
@@ -165,7 +171,7 @@ body {
 }
 
 .work-card-link {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--primary-text);
   text-decoration: underline;
@@ -181,6 +187,151 @@ body {
   font-size: 14px;
   color: var(--secondary-text);
   line-height: 1.55;
+}
+
+/* --- Work tab: logos, rich copy, quote callouts, link buttons */
+.work-card-logo-row {
+  margin: 0 0 14px;
+}
+
+.work-card-logo {
+  display: block;
+  max-height: 40px;
+  width: auto;
+}
+
+.work-card-rich {
+  margin-top: 4px;
+}
+
+.work-card-rich > *:first-child {
+  margin-top: 0;
+}
+
+.work-card-subheading {
+  margin: 20px 0 10px;
+  font-size: calc(15px + 1pt);
+  font-weight: 600;
+  color: var(--primary-text);
+}
+
+.work-card-subheading:first-child {
+  margin-top: 0;
+}
+
+.work-card-items-heading {
+  margin-top: 22px;
+}
+
+.work-card-rich + .work-card-subheading.work-card-items-heading,
+.work-card-rich + .work-card-items {
+  margin-top: 20px;
+}
+
+.work-card-rich-p {
+  margin: 0 0 14px;
+  color: var(--secondary-text);
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.work-card-rich-p--section-start {
+  margin-top: 0;
+  padding-top: 32px;
+}
+
+.work-inline-link {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.work-inline-link:hover {
+  color: #000000;
+}
+
+.work-link-button {
+  display: inline-block;
+  margin: 6px 8px 0 0;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--primary-text);
+  text-decoration: none;
+  background: #ffffff;
+  border: 1px solid rgba(26, 26, 26, 0.12);
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.work-link-button:hover {
+  border-color: rgba(26, 26, 26, 0.22);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.work-quote-callout {
+  margin: 14px 0;
+  padding: 18px 20px;
+  border-radius: var(--radius);
+  background: #e4e4e4;
+  color: #3a3a3a;
+}
+
+.work-quote-callout--hero {
+  margin: 0 0 20px;
+}
+
+.work-quote-callout--nested {
+  margin: 10px 0 0;
+}
+
+.work-quote-callout-text {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+
+.work-quote-callout-attribution {
+  margin: 10px 0 0;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  color: #555555;
+}
+
+.work-rich-list {
+  margin: 0 0 14px;
+  padding-left: 1.25rem;
+  color: var(--secondary-text);
+  line-height: 1.55;
+}
+
+.work-rich-list--nested {
+  margin: 8px 0 4px;
+}
+
+.work-rich-li {
+  margin: 0 0 8px;
+}
+
+.work-rich-li--quote {
+  list-style: none;
+  margin-left: -1.25rem;
+}
+
+.work-rich-li--button-row {
+  list-style: none;
+}
+
+.work-rich-list--nested > .work-rich-li--button-row {
+  margin-left: -1.25rem;
+  padding-left: 0;
 }
 
 .about-row h3 {

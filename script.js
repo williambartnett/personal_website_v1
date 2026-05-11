@@ -2,7 +2,7 @@
 This file loads JSON content and renders all site sections.
 It is called by index.html and controls tab switching and contact form submission.
 CHANGED: Updated media panes to show multi-item native-style lists.
-CHANGED: Work tab supports optional item lists with linked titles and subtext.
+CHANGED: Work tab supports rich `content` blocks (lists, quotes, buttons), optional `items` + `itemsHeading`, linked deal rows, and quote callouts (hero + in-card).
 CHANGED: Contact tab includes faux iOS status bar and profile header (same photo as chat avatar) above the chat thread.
 */
 
@@ -49,6 +49,19 @@ function escapeHtml(unsafeText) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+/**
+ * Returns true if the string is safe to embed in a CSS object-position value inside an inline style.
+ */
+function isSafeObjectPositionValue(value) {
+  if (typeof value !== "string") {
+    return false;
+  }
+
+  const trimmed = value.trim();
+
+  return trimmed.length > 0 && trimmed.length <= 48 && /^[a-z0-9.%+\s-]+$/i.test(trimmed);
 }
 
 /**
@@ -495,36 +508,175 @@ function initializeSpotifyPlayback() {
 }
 
 /**
- * Renders one work history card: plain body or a list of linked titles with description subtext.
+ * Wraps quote body with typographic double quotes for display (inner text is still escaped separately).
  */
+function wrapWorkQuotedBody(text) {
+  const trimmed = text != null ? String(text).trim() : "";
+  return `\u201C${trimmed}\u201D`;
+}
+
 /**
- * Renders one work history card: plain body or a list of linked titles with description subtext.
+ * Builds markup for a work-tab testimonial / pull quote in a shaded callout box.
+ */
+function buildWorkQuoteCalloutMarkup(quoteText, attributionLine, extraClass) {
+  const baseClass = "work-quote-callout";
+  const classNames = extraClass ? `${baseClass} ${extraClass}` : baseClass;
+  const attributionMarkup = attributionLine
+    ? `<p class="work-quote-callout-attribution">${escapeHtml(attributionLine)}</p>`
+    : "";
+  const displayQuote = wrapWorkQuotedBody(quoteText);
+
+  return `<div class="${classNames}"><p class="work-quote-callout-text">${escapeHtml(displayQuote)}</p>${attributionMarkup}</div>`;
+}
+
+/**
+ * Renders inline text, text links, or pill buttons from a segments array (work.json rich content).
+ */
+function renderWorkSegments(segments) {
+  if (!Array.isArray(segments)) {
+    return "";
+  }
+
+  return segments
+    .map((segment) => {
+      const piece = segment.text != null ? String(segment.text) : "";
+
+      if (!segment.url) {
+        return escapeHtml(piece);
+      }
+
+      if (segment.linkStyle === "button") {
+        return `<a class="work-link-button" href="${escapeHtml(segment.url)}" target="_blank" rel="noreferrer">${escapeHtml(piece)}</a>`;
+      }
+
+      return `<a class="work-inline-link" href="${escapeHtml(segment.url)}" target="_blank" rel="noreferrer">${escapeHtml(piece)}</a>`;
+    })
+    .join("");
+}
+
+/**
+ * Renders one row in a rich work list (optional nested children or embedded quote).
+ */
+function renderWorkListRow(listItem) {
+  if (listItem.quote) {
+    const quoteData = listItem.quote;
+    const attribution = quoteData.attribution || "";
+
+    return `<li class="work-rich-li work-rich-li--quote">${buildWorkQuoteCalloutMarkup(
+      quoteData.text,
+      attribution,
+      "work-quote-callout--nested"
+    )}</li>`;
+  }
+
+  const segments = listItem.segments || [];
+  const isButtonOnlyRow =
+    segments.length > 0 &&
+    segments.every((segment) => segment.url && segment.linkStyle === "button");
+  const liClass = isButtonOnlyRow ? "work-rich-li work-rich-li--button-row" : "work-rich-li";
+
+  const bodyMarkup = renderWorkSegments(segments);
+  const nestedMarkup =
+    Array.isArray(listItem.children) && listItem.children.length > 0
+      ? `<ul class="work-rich-list work-rich-list--nested">${listItem.children.map((child) => renderWorkListRow(child)).join("")}</ul>`
+      : "";
+
+  return `<li class="${liClass}">${bodyMarkup}${nestedMarkup}</li>`;
+}
+
+/**
+ * Renders a bullet or numbered list block from work.json.
+ */
+function renderWorkListBlock(block) {
+  const tagName = block.ordered ? "ol" : "ul";
+  const listClass = block.ordered ? "work-rich-list work-rich-list--ordered" : "work-rich-list";
+
+  return `<${tagName} class="${listClass}">${(block.items || []).map((row) => renderWorkListRow(row)).join("")}</${tagName}>`;
+}
+
+/**
+ * Renders one rich content block inside a work card.
+ */
+function renderWorkBlock(block) {
+  if (block.type === "subheading") {
+    return `<h4 class="work-card-subheading">${escapeHtml(block.text)}</h4>`;
+  }
+
+  if (block.type === "paragraph") {
+    const sectionClass = block.sectionStart ? " work-card-rich-p--section-start" : "";
+    return `<p class="work-card-rich-p${sectionClass}">${renderWorkSegments(block.segments)}</p>`;
+  }
+
+  if (block.type === "quote") {
+    return buildWorkQuoteCalloutMarkup(block.text, block.attribution || "", "");
+  }
+
+  if (block.type === "list") {
+    return renderWorkListBlock(block);
+  }
+
+  return "";
+}
+
+/**
+ * Renders the full optional `content` array on a work card.
+ */
+function renderWorkContent(cardItem) {
+  const blocks = cardItem.content;
+
+  if (!Array.isArray(blocks) || blocks.length === 0) {
+    return "";
+  }
+
+  return `<div class="work-card-rich">${blocks.map((block) => renderWorkBlock(block)).join("")}</div>`;
+}
+
+/**
+ * Renders one work history card: optional logo, title, rich `content`, optional `itemsHeading` + linked deal list, or legacy body/items-only shapes.
  */
 function renderWorkCardMarkup(cardItem) {
+  const hasContent = Array.isArray(cardItem.content) && cardItem.content.length > 0;
   const hasItems = Array.isArray(cardItem.items) && cardItem.items.length > 0;
+  const logoMarkup = cardItem.logo
+    ? `<div class="work-card-logo-row"><img class="work-card-logo" src="${escapeHtml(cardItem.logo)}" alt="${escapeHtml(
+        cardItem.logoAlt || ""
+      )}" /></div>`
+    : "";
 
-  if (hasItems) {
-    const itemsMarkup = cardItem.items
-      .map(
-        (item) => `
+  const itemsHeadingMarkup =
+    hasItems && cardItem.itemsHeading
+      ? `<h4 class="work-card-subheading work-card-items-heading">${escapeHtml(cardItem.itemsHeading)}</h4>`
+      : "";
+
+  const itemsMarkup = hasItems
+    ? cardItem.items
+        .map(
+          (item) => `
         <div class="work-card-item">
           <a class="work-card-link" href="${escapeHtml(item.url)}" target="_blank" rel="noreferrer">${escapeHtml(item.title)}</a>
           <p class="work-card-item-sub">${escapeHtml(item.description)}</p>
         </div>
       `
-      )
-      .join("");
+        )
+        .join("")
+    : "";
 
+  const itemsSectionMarkup = hasItems ? `${itemsHeadingMarkup}<div class="work-card-items">${itemsMarkup}</div>` : "";
+
+  if (hasContent || hasItems) {
     return `
         <article class="card work-card">
+          ${logoMarkup}
           <h3>${escapeHtml(cardItem.title)}</h3>
-          <div class="work-card-items">${itemsMarkup}</div>
+          ${renderWorkContent(cardItem)}
+          ${itemsSectionMarkup}
         </article>
       `;
   }
 
   return `
         <article class="card work-card">
+          ${logoMarkup}
           <h3>${escapeHtml(cardItem.title)}</h3>
           <p>${escapeHtml(cardItem.body)}</p>
         </article>
@@ -532,16 +684,22 @@ function renderWorkCardMarkup(cardItem) {
 }
 
 /**
- * Renders the work quote and stacked work history cards.
+ * Renders the work quote callout and stacked work history cards.
  */
 function renderWorkSection() {
   const workContentElement = getRequiredElement("work-content");
+  const workQuote = appState.work.quote;
+  const quoteText = workQuote?.text || "";
+  const quotedBody = wrapWorkQuotedBody(quoteText);
+  const quoteAuthor = workQuote?.author || "";
+  const quoteMarkup = workQuote
+    ? `<p class="quote">${escapeHtml(quotedBody)}</p>${quoteAuthor ? `<p class="quote-author"> ${escapeHtml(quoteAuthor)}</p>` : ""}`
+    : "";
 
   const cardsMarkup = appState.work.cards.map((cardItem) => renderWorkCardMarkup(cardItem)).join("");
 
   workContentElement.innerHTML = `
-    <p class="quote">${escapeHtml(appState.work.quote.text)}</p>
-    <p class="quote-author">- ${escapeHtml(appState.work.quote.author)}</p>
+    ${quoteMarkup}
     <div class="work-layout">${cardsMarkup}</div>
   `;
 }
@@ -557,15 +715,22 @@ function renderAdventuresSection() {
 
   const cardsMarkup = appState.adventures.cards
     .map(
-      (cardItem) => `
+      (cardItem) => {
+        const objectPositionAttr =
+          isSafeObjectPositionValue(cardItem.imageObjectPosition) && cardItem.imageObjectPosition
+            ? ` style="object-position: ${escapeHtml(cardItem.imageObjectPosition.trim())}"`
+            : "";
+
+        return `
         <article class="adventure-card">
-          <img src="${escapeHtml(cardItem.image)}" alt="${escapeHtml(cardItem.alt)}" />
+          <img src="${escapeHtml(cardItem.image)}" alt="${escapeHtml(cardItem.alt)}"${objectPositionAttr} />
           <div class="adventure-overlay">
             <h3 class="adventure-title">${escapeHtml(String(cardItem.title ?? ""))}</h3>
             <p class="adventure-subtext">${escapeHtml(cardItem.subtext)}</p>
           </div>
         </article>
-      `
+      `;
+      }
     )
     .join("");
 

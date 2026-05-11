@@ -1,8 +1,8 @@
 {
   "_fileInfo": {
-    "purpose": "Work tab quote and timeline-style cards.",
+    "purpose": "Work tab quote and cards; optional rich `content` blocks (subheading, paragraph segments, lists, quotes).",
     "usedBy": "Rendered by script.js in the Work tab.",
-    "changed": "Banking, University, and High School cards list linked highlights with description subtext."
+    "changed": "Top quote uses global `.quote` styles; card logos removed; Jefferies Key Projects use optional `sectionStart` on paragraphs for vertical breaks; CEO quotes trimmed."
   },
   "quote": {
     "text": "Determine never to be idle. No person will have occasion to complain of the want of time, who never loses any. It is wonderful how much may be done, if we are always doing.",
@@ -10,20 +10,205 @@
   },
   "cards": [
     {
-      "title": "Vibe Coding",
-      "body": "This website for starters, Github repo to follow"
+      "title": "Volunteering & Side Quests Since Leaving Banking",
+      "content": [
+        {
+          "type": "subheading",
+          "text": "Guitars Over Guns (GOGO)"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "segments": [
+                {
+                  "text": "As a member the national nonprofit Guitars Over Guns' Jr. BoD's Strategic Initiatives Committee, I have produced deliverables to help professionalize and scale their fundraising function:"
+                }
+              ],
+              "children": [
+                {
+                  "segments": [
+                    {
+                      "text": "Fundraising dashboard: Developed a standardized dashboard to provide increased and organized visibility into GOGO's fundraising data, including realized donations and future opportunities by location, donor type, and campaign over time."
+                    }
+                  ]
+                },
+                {
+                  "segments": [
+                    {
+                      "text": "Sample dashboard",
+                      "url": "https://drive.google.com/file/d/1HUl_1HH5q1QWxcWbZF-OdN0C-dxjnpWq/view?usp=share_link",
+                      "linkStyle": "button"
+                    }
+                  ]
+                },
+                {
+                  "quote": {
+                    "text": "We've done so much projections on the budgeting based off of guesswork. And this is like, okay, we can really dial it in... This is really pretty phenomenal to look at.",
+                    "attribution": "— GOGO CEO"
+                  }
+                },
+                {
+                  "segments": [
+                    {
+                      "text": "DevOps process mapping & gap identification: Conducted extensive discovery across GOGO's data infrastructure, CRM, fundraising technology, and grants operations to comprehensively document and map existing advancement workflows and identify process gaps, automatable manual processes, and areas for improvement. Delivered to the incoming Chief Advancement Officer to assist in improving processes and developing national SOPs."
+                    }
+                  ]
+                },
+                {
+                  "quote": {
+                    "text": "holy sh*t! These are amazing. All of this is pointing toward the very SOPs that I know [incoming CAO] wants to focus on. Blown away.",
+                    "attribution": "— GOGO CEO"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "subheading",
+          "text": "The Webster Groves Bookshop"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "segments": [
+                {
+                  "text": "Conducted extensive process discovery and workflow mapping to identify areas for efficiency and automation:"
+                }
+              ],
+              "children": [
+                {
+                  "segments": [
+                    {
+                      "text": "Vibe coded (Cursor) an inventory intake tool that automates manual excel actions when receiving new book shipments and tracking them in the inventory system."
+                    }
+                  ]
+                },
+                {
+                  "segments": [
+                    {
+                      "text": "Github Repo",
+                      "url": "https://github.com/williambartnett/twgbs_inventory_app_v2",
+                      "linkStyle": "button"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "subheading",
+          "text": "This Website"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "segments": [
+                {
+                  "text": "Wanted to make a slick site to tell people more about my work and who I am as a person. Had a lot of fun making this with Cursor."
+                }
+              ],
+              "children": [
+                {
+                  "segments": [
+                    {
+                      "text": "Github Repo",
+                      "url": "https://github.com/williambartnett/personal_website_v1",
+                      "linkStyle": "button"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
-      "title": "Banking",
-      "logo": "assets/images/logos/jefferies.svg",
-      "logoKey": "jefferies",
-      "logoAlt": "Jefferies logo",
-      "items": [
+      "title": "Jefferies",
+      "content": [
         {
-          "url": "https://www.linkedin.com/posts/jefferies_jefferies-logistics-and-transportation-conference-ugcPost-7320797006283616257-xRD-?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB8i1BkBe5Y_Fp_AFzlvOGoYem5w4X20ED0",
-          "title": "Jefferies' Logistics & Transportation Conference",
-          "description": "Organized our L&T M&A conference"
+          "type": "subheading",
+          "text": "Key Projects:"
         },
+        {
+          "type": "paragraph",
+          "segments": [
+            {
+              "text": "Jefferies' Logistics & Transportation Conference",
+              "url": "https://www.linkedin.com/posts/jefferies_jefferies-logistics-and-transportation-conference-ugcPost-7320797006283616257-xRD-?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB8i1BkBe5Y_Fp_AFzlvOGoYem5w4X20ED0"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "segments": [
+            {
+              "text": "Planned my group's L&T M&A conference and implemented new meeting scheduling software that increased the number of CEO-to-investor meetings by 10x YoY."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "segments": [
+            {
+              "text": "Post-Conference Promotional Video",
+              "url": "https://www.linkedin.com/posts/jefferies_jefferies-logistics-and-transportation-conference-ugcPost-7320797006283616257-xRD-?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB8i1BkBe5Y_Fp_AFzlvOGoYem5w4X20ED0",
+              "linkStyle": "button"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "sectionStart": true,
+          "segments": [
+            {
+              "text": "Sellside: Sale of Horizon Air Freight to GHK Capital Partners",
+              "url": "https://www.prnewswire.com/news-releases/icv-partners-announces-successful-exit-from-horizon-air-freight-302232004.html"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "segments": [
+            {
+              "text": "My first time as an analyst owning the end-to-end deal execution. Built the CIM, management presentation, and projections model. I prepped management for >60 investor meetings and quarterbacked intensive diligence.\n\nIn the final stages, a lead buyer challenged management's growth assumptions. Over a weekend, I worked round the clock with the C-suite to build a granular, customer sub-account-level price/volume model and personally presented it to the managing partner of the $5B PE fund, answering heated live Q&A. The analysis addressed their concerns and resulted in an updated offer that included a $50M earnout above the original bid."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "sectionStart": true,
+          "segments": [
+            {
+              "text": "Buyside: Mobico North American School Bus Acquired by I Squared Capital",
+              "url": "https://www.londonstockexchange.com/news-article/MCG/proposed-sale-of-north-america-school-bus/17005162"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "segments": [
+            {
+              "text": "I ran point on this buyside M&A deal, operating much like a Chief of Staff to our client. I was the main intermediary between our internal groups, our client's team, their 12 teams of consultants, six lenders, and the sellside banks. I was also in charge of special projects like valuation models, market research, and IC board decks.\n\nThe volume and complexity of projects and information flow was extreme, and I quarterbacked weekly all-hands standups and daily workstream summaries to keep everyone aligned and on track and the deal successfully closed for ~$600m."
+            }
+          ]
+        },
+        {
+          "type": "quote",
+          "text": "We love you, Willy B",
+          "attribution": "— My MD during my first performance review"
+        }
+      ],
+      "itemsHeading": "Other Publicly Announced Deals:",
+      "items": [
         {
           "url": "https://www.businesswire.com/news/home/20221006005363/en/Apax-Funds-to-Sell-Boasso-Global-to-KKR",
           "title": "Buyside: Sale of Boasso Global to KKR",
@@ -45,16 +230,6 @@
           "description": "Flew to Rotterdam and built the CIM with management"
         },
         {
-          "url": "https://www.prnewswire.com/news-releases/icv-partners-announces-successful-exit-from-horizon-air-freight-302232004.html",
-          "title": "Sellside: Sale of Horizon Air Freight to GHK Capital Partners",
-          "description": "Built the CIM and projections model; ran intensive diligence; learned a lot about ocean shipping"
-        },
-        {
-          "url": "https://www.londonstockexchange.com/news-article/MCG/proposed-sale-of-north-america-school-bus/17005162",
-          "title": "Buyside: Mobico North American School Bus Acquired by I Squared Capital",
-          "description": "Chief of Staff extroardinaire, coordinating a dozen consultants' diligence and building board decks and valuation models"
-        },
-        {
           "url": "https://gobeacon.com/about-us/investor-relations/",
           "title": "LevFin: Refinancing for Beacon Mobility",
           "description": "Made some pretty slides telling lenders about the US school bus business"
@@ -63,9 +238,6 @@
     },
     {
       "title": "University",
-      "logo": "assets/images/logos/university-of-richmond.svg",
-      "logoKey": "richmond",
-      "logoAlt": "University of Richmond logo",
       "items": [
         {
           "url": "https://www.richmondfiji.com",
@@ -91,24 +263,21 @@
     },
     {
       "title": "High School",
-      "logo": "assets/images/logos/john-burroughs.png",
-      "logoKey": "burroughs",
-      "logoAlt": "John Burroughs School logo",
       "items": [
         {
           "url": "https://www.stltoday.com/pr/news/john-burroughs-school-achieves-mpg-with-super-mileage-car/article_a433aa16-498e-11e8-81d8-5cb9017bff17.html",
           "title": "Super Mileage Vehicle Club",
-          "description": "Designed and built a car that got 519MPG at the international Shell Eco Marathon in Sonoma, CA. Also competed on the streets of downtown Detroit for two years."
+          "description": "Designed and built a car that got 519MPG at the international Shell Eco Marathon in Sonoma, CA. Also competed on the streets of downtown Detroit for two years. This was loads of fun and taught me how to GSD and build stuff from scratch by designing, building, testing, and iterating. I also learned how to MIG weld and a lot about basic engineering."
         },
         {
           "url": "https://drive.google.com/file/d/1Zyc5x08Wk8qZF0Q5tkr5wUooi7jIGP0s/view?usp=share_link",
           "title": "William's Lawn Care",
-          "description": "Mowed lawns all weekend every summer for seven years. Nothing may ever be as satisfying as finishing a job and admiring the perfect stripes and crisp edges. "
+          "description": "Mowed lawns all weekend every summer for seven years. Nothing may ever be as satisfying as finishing a job and admiring the perfect stripes and crisp edges."
         },
         {
           "url": "https://drive.google.com/drive/folders/1KxfLQ4siz5UbbDd0D3hdUi19bJzevWRa?usp=sharing",
           "title": "The Hague International Model United Nations (Held in Qatar)",
-          "description": "Press Team Head of Photographers. Produced a daily print newspaper and made a nice video to show the school back home."
+          "description": "Press Team Head of Photographers. Worked with a team of photographers to ensure full conference coverage during the day, and edit and layout at night to produce a daily print newspaper. Also made a nice video to show the school back home."
         }
       ]
     }
