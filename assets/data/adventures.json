@@ -2,7 +2,7 @@
   "_fileInfo": {
     "purpose": "Adventures tab quote and image grid data.",
     "usedBy": "Rendered by script.js into photo cards.",
-    "changed": "Bangkok tile image URL cache-busted (?v=2) so replaced bangkok.JPG on disk shows in the browser."
+    "changed": "Bangkok and Trail Racing tiles use optional `imageObjectPosition` (center top) for crop; Bangkok URL cache-busted (?v=2)."
   },
   "quote": {
     "text": "Life is not a spectator sport!",
@@ -13,7 +13,8 @@
       "image": "assets/images/adventures/bangkok.JPG?v=2",
       "alt": "bangkok.JPG adventure photo",
       "title": "Bangkok",
-      "subtext": "Have never seen so many Buddhas in one place, each larger than the last"
+      "subtext": "Have never seen so many Buddhas in one place, each larger than the last",
+      "imageObjectPosition": "center top"
     },
     {
       "image": "assets/images/adventures/camino.jpeg",
@@ -67,7 +68,8 @@
       "image": "assets/images/adventures/ragnar.jpg",
       "alt": "ragnar.jpg adventure photo",
       "title": "Trail Racing",
-      "subtext": "I have become addicted to these 24h Ragnar trail relay races"
+      "subtext": "I have become addicted to these 24h Ragnar trail relay races",
+      "imageObjectPosition": "center top"
     },
     {
       "image": "assets/images/adventures/rowing.jpeg",

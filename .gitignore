@@ -4,3 +4,6 @@
 !.dev.vars.example
 .env*
 !.env.example
+
+# Kept local only — not pushed to GitHub
+CHANGELOG.md
