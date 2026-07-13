@@ -2,7 +2,7 @@
   "_fileInfo": {
     "purpose": "Live now cards: listening, eating, reading, watching.",
     "usedBy": "Rendered by script.js into William tab media cards.",
-    "changed": "Beli updates; Goodreads Slouching Towards Bethlehem uses custom cover thumbnail in assets/images/media."
+    "changed": "Added Blue Note Jazz Club (beli4) and Desperado to Letterboxd."
   },
   "cards": [
     {
@@ -57,6 +57,14 @@
       "heading": "Where I'm Eating",
       "iconColor": "#FF6B35",
       "items": [
+        {
+          "thumbnail": "assets/images/media/beli4.jpg",
+          "thumbnailAlt": "Blue Note Jazz Club thumbnail",
+          "primaryText": "Blue Note Jazz Club",
+          "secondaryText": "New York, NY",
+          "rating": "9.7",
+          "url": "https://www.google.com/maps/search/?api=1&query=Blue+Note+Jazz+Club+New+York+NY"
+        },
         {
           "thumbnail": "assets/images/media/beli-thumb-1.png",
           "thumbnailAlt": "Lafayette Tavern thumbnail",
@@ -146,6 +154,13 @@
       "heading": "What I'm Watching",
       "iconColor": "#00C030",
       "items": [
+        {
+          "thumbnail": "https://upload.wikimedia.org/wikipedia/en/a/a6/Desperado1.jpg",
+          "thumbnailAlt": "Desperado poster",
+          "primaryText": "Desperado",
+          "secondaryText": "\u2605\u2605\u2605\u2605",
+          "url": "https://letterboxd.com/film/desperado/"
+        },
         {
           "thumbnail": "https://m.media-amazon.com/images/M/MV5BZTRhYjI1MTItMWYwMi00MjY5LWI1OTktMzQwNzA3MWJlN2QyXkEyXkFqcGc@._V1_.jpg",
           "thumbnailAlt": "Marty Supreme poster",

@@ -4,6 +4,7 @@ It is called by index.html and controls tab switching and contact form submissio
 CHANGED: Updated media panes to show multi-item native-style lists.
 CHANGED: Work tab supports rich `content` blocks (lists, quotes, buttons), optional `items` + `itemsHeading`, linked deal rows, and quote callouts (hero + in-card).
 CHANGED: Contact tab includes faux iOS status bar and profile header (same photo as chat avatar) above the chat thread.
+CHANGED: Profile photo box uses scroll-snap auto-advance plus drag/swipe; contact location defaults to New York, NY.
 */
 
 // --- App configuration and state
@@ -22,7 +23,8 @@ const appState = {
   adventures: null,
   contact: null,
   profileSlideIndex: 0,
-  profileSlideTimer: null
+  profileSlideTimer: null,
+  profileSlideResumeTimer: null
 };
 
 // --- Utility functions
@@ -105,7 +107,6 @@ function initializeTabs() {
 function renderProfileSection() {
   const profileData = appState.profile;
   const aboutCardsElement = getRequiredElement("about-cards");
-  const profilePhotoElement = getRequiredElement("profile-photo");
 
   const rowsMarkup = profileData.aboutCards
     .map(
@@ -124,59 +125,311 @@ function renderProfileSection() {
       ${rowsMarkup}
     </article>
   `;
-  profilePhotoElement.alt = profileData.profilePhoto.alt;
   initializeProfileSlideshow();
 }
 
 /**
- * Rotates the headshot image every 7 seconds with a left slide.
+ * Clears any pending photo slideshow timers.
  */
-function initializeProfileSlideshow() {
-  const profilePhotoCardElement = getRequiredElement("profile-photo-card");
-  const profilePhotoElement = getRequiredElement("profile-photo");
-  const profilePhotoNextElement = getRequiredElement("profile-photo-next");
-  const slideshowPhotos = appState.profile.profileSlideshowPhotos || [appState.profile.profilePhoto.src];
-
+function clearProfileSlideshowTimers() {
   if (appState.profileSlideTimer) {
     clearInterval(appState.profileSlideTimer);
+    appState.profileSlideTimer = null;
   }
 
-  appState.profileSlideIndex = 0;
-  profilePhotoElement.src = slideshowPhotos[0];
-  profilePhotoNextElement.src = slideshowPhotos[1 % slideshowPhotos.length];
-  profilePhotoElement.alt = appState.profile.profilePhoto.alt;
-  profilePhotoNextElement.alt = appState.profile.profilePhoto.alt;
+  if (appState.profileSlideResumeTimer) {
+    clearTimeout(appState.profileSlideResumeTimer);
+    appState.profileSlideResumeTimer = null;
+  }
+}
 
-  if (slideshowPhotos.length <= 1) {
+/**
+ * Builds the Photos-style slider: auto-advances, short-drag / flick paging, and seamless circular loop.
+ */
+function initializeProfileSlideshow() {
+  const sliderElement = getRequiredElement("headshot-slider");
+  const slideshowPhotos = appState.profile.profileSlideshowPhotos || [appState.profile.profilePhoto.src];
+  const photoAlt = appState.profile.profilePhoto.alt || "Portrait of William Bartnett";
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const realCount = slideshowPhotos.length;
+
+  clearProfileSlideshowTimers();
+  appState.profileSlideIndex = 0;
+
+  if (realCount === 0) {
+    sliderElement.innerHTML = "";
     return;
   }
 
-  let slideInProgress = false;
-  profilePhotoCardElement.addEventListener("transitionend", () => {
-    if (!slideInProgress) {
+  // Loop track: [last clone] [...real photos...] [first clone]
+  const loopedPhotos = [slideshowPhotos[realCount - 1], ...slideshowPhotos, slideshowPhotos[0]];
+
+  sliderElement.innerHTML = `
+    <div class="headshot-track">
+      ${loopedPhotos
+        .map(
+          (photoSrc) =>
+            `<img class="headshot-frame" src="${escapeHtml(photoSrc)}" alt="${escapeHtml(photoAlt)}" draggable="false" />`
+        )
+        .join("")}
+    </div>
+  `;
+
+  if (realCount <= 1) {
+    return;
+  }
+
+  const trackElement = sliderElement.querySelector(".headshot-track");
+  let currentDomIndex = 1;
+  let trackOffsetX = 0;
+  let isPointerDragging = false;
+  let isSettling = false;
+  let dragStartX = 0;
+  let dragOriginOffsetX = 0;
+  let hasDragMoved = false;
+  let lastPointerX = 0;
+  let lastPointerTime = 0;
+  let pointerVelocity = 0;
+  let activePointerId = null;
+  let settleTimeoutId = null;
+
+  /**
+   * Clears the settle timeout used as a backup when transitionend does not fire.
+   */
+  function clearSettleTimeout() {
+    if (settleTimeoutId !== null) {
+      window.clearTimeout(settleTimeoutId);
+      settleTimeoutId = null;
+    }
+  }
+
+  /**
+   * Marks the carousel as finished settling after a page animation.
+   */
+  function finishSettling() {
+    clearSettleTimeout();
+    trackElement.classList.remove("is-animating");
+    normalizeLoopPosition();
+    isSettling = false;
+  }
+
+  /**
+   * Returns the visible width of one photo.
+   */
+  function getSlideWidth() {
+    return sliderElement.clientWidth || 1;
+  }
+
+  /**
+   * Moves the photo track. Instant jumps have no transition; page changes animate smoothly.
+   */
+  function setTrackOffset(offsetX, useTransition) {
+    trackOffsetX = offsetX;
+    const shouldAnimate = useTransition && !prefersReducedMotion;
+    trackElement.classList.toggle("is-animating", shouldAnimate);
+    trackElement.style.transform = `translate3d(${offsetX}px, 0, 0)`;
+  }
+
+  /**
+   * Places the track on a DOM slide index (including clones).
+   */
+  function goToDomIndex(domIndex, useTransition) {
+    const slideWidth = getSlideWidth();
+    const targetOffset = -domIndex * slideWidth;
+    const alreadyThere = Math.abs(targetOffset - trackOffsetX) < 1 && currentDomIndex === domIndex;
+
+    currentDomIndex = domIndex;
+    appState.profileSlideIndex = Math.max(0, Math.min(realCount - 1, ((domIndex - 1) + realCount) % realCount));
+    setTrackOffset(targetOffset, useTransition && !alreadyThere);
+
+    if (useTransition && !alreadyThere && !prefersReducedMotion) {
+      clearSettleTimeout();
+      settleTimeoutId = window.setTimeout(finishSettling, 700);
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * After landing on a clone, silently teleport to the matching real photo.
+   */
+  function normalizeLoopPosition() {
+    if (currentDomIndex <= 0) {
+      goToDomIndex(realCount, false);
       return;
     }
 
-    slideInProgress = false;
-    profilePhotoElement.src = slideshowPhotos[appState.profileSlideIndex];
-    const nextIndex = (appState.profileSlideIndex + 1) % slideshowPhotos.length;
-    profilePhotoNextElement.src = slideshowPhotos[nextIndex];
-    profilePhotoCardElement.classList.add("no-slide-transition");
-    profilePhotoCardElement.classList.remove("is-sliding");
-    // Force reflow so position reset happens instantly with no reverse animation.
-    void profilePhotoCardElement.offsetWidth;
-    profilePhotoCardElement.classList.remove("no-slide-transition");
+    if (currentDomIndex >= realCount + 1) {
+      goToDomIndex(1, false);
+    }
+  }
+
+  /**
+   * Chooses the next/previous/current slide from a short drag, like iPhone Photos.
+   */
+  function getReleaseTargetDomIndex(dragDistancePx) {
+    const slideWidth = getSlideWidth();
+    const commitDistance = Math.max(36, slideWidth * 0.12);
+    const commitVelocity = 0.12;
+
+    // Swipe left (negative velocity / positive dragDistance in our pointer math) → next photo.
+    if (pointerVelocity < -commitVelocity || dragDistancePx > commitDistance) {
+      return currentDomIndex + 1;
+    }
+
+    // Swipe right → previous photo.
+    if (pointerVelocity > commitVelocity || dragDistancePx < -commitDistance) {
+      return currentDomIndex - 1;
+    }
+
+    return currentDomIndex;
+  }
+
+  /**
+   * Advances one photo forward with a smooth slide, wrapping circularly.
+   */
+  function advanceSlide() {
+    if (document.hidden || isPointerDragging || isSettling) {
+      return;
+    }
+
+    isSettling = true;
+    const didAnimate = goToDomIndex(currentDomIndex + 1, true);
+    if (!didAnimate) {
+      finishSettling();
+    }
+  }
+
+  /**
+   * Starts the auto-advance timer (every 7 seconds).
+   */
+  function startAutoAdvance() {
+    clearProfileSlideshowTimers();
+
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    appState.profileSlideTimer = window.setInterval(advanceSlide, 7000);
+  }
+
+  /**
+   * Pauses auto-advance while the user is interacting, then resumes shortly after.
+   */
+  function pauseAutoAdvanceTemporarily() {
+    clearProfileSlideshowTimers();
+    appState.profileSlideResumeTimer = window.setTimeout(startAutoAdvance, 9000);
+  }
+
+  trackElement.addEventListener("transitionend", (event) => {
+    if (event.target !== trackElement || event.propertyName !== "transform") {
+      return;
+    }
+
+    finishSettling();
   });
 
-  appState.profileSlideTimer = window.setInterval(() => {
-    if (slideInProgress) {
+  sliderElement.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0 && event.pointerType === "mouse") {
       return;
     }
 
-    appState.profileSlideIndex = (appState.profileSlideIndex + 1) % slideshowPhotos.length;
-    slideInProgress = true;
-    profilePhotoCardElement.classList.add("is-sliding");
-  }, 7000);
+    pauseAutoAdvanceTemporarily();
+    clearSettleTimeout();
+    trackElement.classList.remove("is-animating");
+    normalizeLoopPosition();
+
+    isPointerDragging = true;
+    isSettling = false;
+    hasDragMoved = false;
+    activePointerId = event.pointerId;
+    dragStartX = event.clientX;
+    dragOriginOffsetX = trackOffsetX;
+    lastPointerX = event.clientX;
+    lastPointerTime = performance.now();
+    pointerVelocity = 0;
+
+    sliderElement.classList.add("is-dragging");
+    sliderElement.setPointerCapture(event.pointerId);
+  });
+
+  sliderElement.addEventListener("pointermove", (event) => {
+    if (!isPointerDragging || event.pointerId !== activePointerId) {
+      return;
+    }
+
+    const now = performance.now();
+    const timeDelta = Math.max(1, now - lastPointerTime);
+    const moveDelta = event.clientX - lastPointerX;
+    const instantVelocity = moveDelta / timeDelta;
+    pointerVelocity = pointerVelocity * 0.6 + instantVelocity * 0.4;
+    lastPointerX = event.clientX;
+    lastPointerTime = now;
+
+    const dragDistance = event.clientX - dragStartX;
+    if (Math.abs(dragDistance) > 3) {
+      hasDragMoved = true;
+    }
+
+    setTrackOffset(dragOriginOffsetX + dragDistance, false);
+  });
+
+  /**
+   * Ends a drag and settles onto the next, previous, or current photo.
+   */
+  function endPointerDrag(event) {
+    if (!isPointerDragging || event.pointerId !== activePointerId) {
+      return;
+    }
+
+    isPointerDragging = false;
+    activePointerId = null;
+    sliderElement.classList.remove("is-dragging");
+
+    if (sliderElement.hasPointerCapture(event.pointerId)) {
+      sliderElement.releasePointerCapture(event.pointerId);
+    }
+
+    const dragDistancePx = dragStartX - event.clientX;
+    let targetDomIndex = getReleaseTargetDomIndex(dragDistancePx);
+    targetDomIndex = Math.max(0, Math.min(realCount + 1, targetDomIndex));
+
+    isSettling = true;
+    const didAnimate = goToDomIndex(targetDomIndex, true);
+    if (!didAnimate) {
+      finishSettling();
+    }
+
+    pauseAutoAdvanceTemporarily();
+  }
+
+  sliderElement.addEventListener("pointerup", endPointerDrag);
+  sliderElement.addEventListener("pointercancel", endPointerDrag);
+
+  sliderElement.addEventListener("dragstart", (event) => event.preventDefault());
+  sliderElement.addEventListener("click", (event) => {
+    if (hasDragMoved) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      clearProfileSlideshowTimers();
+      return;
+    }
+
+    startAutoAdvance();
+  });
+
+  window.addEventListener("resize", () => {
+    goToDomIndex(currentDomIndex, false);
+  });
+
+  goToDomIndex(1, false);
+  startAutoAdvance();
 }
 
 /**
@@ -222,7 +475,8 @@ function getAutoThumbnail(cardKey, itemIndex) {
       "assets/images/media/spotify-cover-4.png",
       "assets/images/media/spotify-cover-5.png"
     ],
-    beli: [
+      beli: [
+      "assets/images/media/beli4.jpg",
       "assets/images/media/beli-thumb-1.png",
       "assets/images/media/beli-thumb-2.png",
       "assets/images/media/beli-thumb-3.png",
@@ -755,7 +1009,7 @@ function buildContactMarkup(includeForm) {
   const headerLocation =
     typeof contactData.locationLine === "string" && contactData.locationLine.trim().length > 0
       ? contactData.locationLine.trim()
-      : "Richmond, VA";
+      : "New York, NY";
   const phoneHeaderMarkup = includeForm
     ? `
       <div class="contact-phone-header">
